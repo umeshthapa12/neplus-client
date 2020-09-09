@@ -1,0 +1,33 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="bForm" (ngSubmit)="save()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data.id > 0 ? 'कार्यालयको शाखा परिबर्तन गर्नुहोस्' : 'कार्यालयको शाखा थप्नुहोस्'}}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button (click)="cancel()" matTooltip="Close" type="button"
+                    class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field appearance="outline">
+                <mat-label>नाम</mat-label>
+                <input matInput placeholder="कार्यालय शाखाको नाम राख्नुहोस्" formControlName="name" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="mat-dialog-action">
+        <button matTooltipPosition="above" matTooltip="सुरक्षित राख्नुहोस्" type="submit"
+            class="btn btn-primary">सुरक्षित राख्नुहोस्</button>
+            <button matTooltipPosition="above" matTooltip="बन्द गर्नुहोस्" (click)="cancel()" type="button"
+            class="btn btn-danger mr-1 ml-1">बन्द गर्नुहोस्</button>
+    </div>
+
+</form>

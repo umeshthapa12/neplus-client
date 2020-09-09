@@ -1,0 +1,54 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="remunerationGroupTypeForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{(data?.id > 0 ? ' Change Remuneration Group type Form' :'Add Remuneration Group Type') }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name in Nepali</mat-label>
+                <input matInput placeholder="Name Nepali" formControlName="nameNepali">
+
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                    <mat-option *ngIf="status.length < 1">No content</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

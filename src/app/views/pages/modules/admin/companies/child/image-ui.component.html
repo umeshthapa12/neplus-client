@@ -1,0 +1,41 @@
+<div class="col-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-secondary px-0 mb-0" role="alert">
+                <div class="alert-icon"><i class="flaticon-information"></i></div>
+                <div class="alert-text">
+                    <strong>Hint:</strong> 
+                    {{selectedFile ? 'Adjust your company logo thumbnail. Drag to reposition. Zoom
+                    in/out to crop from selected section.':'Select an image (logo / profile picture) for this company.'}} 
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div *ngIf="selectedFile && !dragTip && !fileErrorMessage" class="img-drag-tip"> Drag to reposition <i id="info-tip"
+                    class="flaticon-info ml-2 m--font-info"
+                    matTooltip="Drag to reposition. Use mouse wheel to zoom in/out. (for touch device, pinch to zoom in/out)"
+                    matTooltipPosition="above" matTooltipClass="kt-font-primary bg-light"></i></div>
+            <div #container [ngClass]="{'container':selectedFile}"> </div>
+        </div>
+        <div id="crop-preview-wrap" class="col-4" *ngIf="cropped">
+            <img [src]="cropped" width="200" class="btn-block" alt="Preview">
+            <span class="crop-preview-text">Preview (this will be saved)</span>
+        </div>
+        <div class="col-md-12 mt-2">
+            <input type="file" (change)="imageSelected($event)" style="display: none;" id="profile-picture">
+            <label style="cursor: pointer !important;" for="profile-picture" class="btn btn-label-warning btn-sm btn-bold mr-1 mr-1 mb-0 ">
+                <i class="la la-image"></i>
+                {{selectedFile ? 'Change' :'Upload an Image'}}
+            </label>
+            <button *ngIf="selectedFile" (click)="imageRemoved()" class="btn btn-label-danger btn-sm btn-bold mr-1">
+                <i class="la la-close"></i> Remove
+            </button>
+            <!-- <button *ngIf="selectedFile && !fileErrorMessage" (click)="croppedSave()" class="btn btn-label-success btn-sm btn-bold mr-1">
+                <i class="la la-crop"></i> Crop
+            </button> -->
+        </div>
+        <div *ngIf="fileErrorMessage" class="col-12 kt-font-danger">
+            {{fileErrorMessage}}
+        </div>
+    </div>
+</div>

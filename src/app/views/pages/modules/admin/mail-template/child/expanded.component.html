@@ -1,0 +1,40 @@
+<mat-progress-bar style="height: 2px;" *ngIf="isLoading" mode="indeterminate" color="warn"></mat-progress-bar>
+<div *ngIf="!isLoading && content?.body" class="row mx-0 px-3">
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Title</h3>
+                <span class="kt-widget1__desc">{{(content?.defaultTitle || content?.title)}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Subject</h3>
+                <span class="kt-widget1__desc">{{content?.subject}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Sent Counts</h3>
+                <span class="kt-widget1__desc">{{(content?.sentCounts)}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Description</h3>
+                <span class="kt-widget1__desc">{{(content?.description || '_')}} </span>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row">
+        <div class="col-md-12 h5 kt-label-font-color-3">Body</div>
+        <div class="col-md-12" id="mail-body" [perfectScrollbar]="{wheelPropagation: false}" style="max-height: 500px;"></div>
+    </div>
+</div>

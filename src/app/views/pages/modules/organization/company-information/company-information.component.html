@@ -1,0 +1,175 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Company</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Company Information</span>
+            <button (click)="onAction(0)" *ngIf="companies.length === 0" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div class="table-container table-height" [perfectScrollbar]="{wheelPropagation: false}">
+        <div class="row mx-0">
+            <div class="col-md-12 col-sm-12 col-lg-12 mb-2 " *ngFor="let c of companies; trackBy:trackById">
+
+                <mat-card class="mat-elevation-z1 mat-elevation-z7-custom pt-4 pb-4 h-100">
+                    <mat-card-content class="mb-0 ">
+                        <!--begin:: Widgets/Authors Profit-->
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title" style="text-align: center;">
+                                    {{c.name}}
+                                </h3>
+                            </div>
+                            <mat-card-actions>
+                                <div class="row">
+                                    <div class="col mat-card-action">
+                                        <div class="mat-card-action-button">
+                                            <button (click)="onAction(c.id)" matTooltip="Edit this" matTooltipPosition="left" type="button" class="btn btn-label-info btn-icon btn-circle mx-1">
+                                                <i class="flaticon-edit"></i>
+                                            </button>
+                                            <button matTooltip="Delete this" matTooltipPosition="right" (click)="onDelete(c.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1">
+                                                <i class="flaticon-delete"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+
+                        </div>
+
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Name
+                                            </div>
+                                            <span class="kt-widget4__number">{{c.name}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Name Nepali
+
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.nameNepali}}</span>
+                                        </div>
+
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Registration Number
+
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.registrationNumber}}</span>
+                                        </div>
+
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                PAN No
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.panNumber}}</span>
+                                        </div>
+
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info  kt-font-brand">
+                                                Registration Date
+
+                                            </div>
+                                            <span class="kt-widget4__number">{{c.registrationDate}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Address
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.address}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 ">
+
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Mailing Address
+
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.mailingAddress}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info  kt-font-brand">
+                                                Phone
+
+                                            </div>
+                                            <span class="kt-widget4__number">{{c.phone}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Mobile
+
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.mobile}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Email
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.email}}</span>
+                                        </div>
+                                        <div class="kt-widget4__item">
+
+                                            <div class="kt-widget4__info kt-font-brand">
+                                                Logo
+
+                                            </div>
+                                            <span class="kt-widget4__number ">{{c.logo}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </mat-card-content>
+
+                </mat-card>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

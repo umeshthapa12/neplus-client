@@ -1,0 +1,129 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="remunerationForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{(data?.id > 0 ? 'Change remuneration Group Form' :'Add Remuneration Group') }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name in Nepali</mat-label>
+                <input matInput placeholder="Name Nepali" formControlName="nameNepali">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Standard Salary Calculation Day</mat-label>
+                <input matInput placeholder="Standart Salary Calculation Day" formControlName="standardSalaryCalDay">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Attendance Calc Type</mat-label>
+                <mat-select formControlName="attandanceCalType">
+                    <mat-option *ngFor="let a of attendances" [value]="a.value">{{a.value}}</mat-option>
+                    <mat-option *ngIf="attendances.length < 1">No Content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.district">{{displayMessage?.district}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Remuneration Type:</mat-label>
+                <mat-select formControlName="remunerationType">
+                    <mat-option *ngFor="let r of remunerations" [value]="r.value">{{r.value}}</mat-option>
+                    <mat-option *ngIf="remunerations.length < 1">No Content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.district">{{displayMessage?.district}}
+                </mat-error>
+
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                    <mat-option *ngIf="status.length < 1">No content</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isApplyOT">Is Apply OT
+                <!-- <input type="checkbox" formControlName="isApplyOT"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isCountAsEmp">Is Count As Emp
+                <!-- <input type="checkbox" formControlName="isCountAsEmp"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isApplyOffDay">Is Apply Off Day
+                <!-- <input type="checkbox" formControlName="isApplyOffday"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isOffDayAsOT">Is Off Day As OT
+                <!-- <input type="checkbox" formControlName=" isOffDayAsOT"> -->
+            </mat-slide-toggle>
+        </div>
+
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isCheck24hourDuty">Is Check 24 Hour Duty
+                <!-- <input type="checkbox" formControlName=" isOffDayAsOT"> -->
+            </mat-slide-toggle>
+        </div>
+
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isNeedLateApproval">Is Need Late Approval
+                <!-- <input type="checkbox" formControlName="isNeedLateApproval"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="monthlyOTLimit">Monthly OT Limit
+                <!-- <input type="checkbox" formControlName="monthlyOTLimit"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isCheckHalfAttendance">Is Check Half Attendance
+                <!-- <input type="checkbox" formControlName="isCheckHalfAttendance"> -->
+            </mat-slide-toggle>
+        </div>
+        <div class="col-md-3">
+            <mat-slide-toggle (change)="isChange($event.checked)" color="primary" [checked]="useDefult" formControlName="isNoAttendance">Is No Attendance
+                <!-- <input type="checkbox" formControlName="isNoAttendance"> -->
+            </mat-slide-toggle>
+        </div>
+
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

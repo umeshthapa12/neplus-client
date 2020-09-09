@@ -1,0 +1,261 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="attendanceMonthlyForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id > 0 ? ' Change Attendance Monthly Form' :'Add Attendance Monthly' }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" matDialogContent>
+        <div class="row mt-2" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Code</mat-label>
+                    <input matInput formControlName="empCode" placeholder="Employee Code" readonly>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Attendance Sheet</mat-label>
+                    <mat-select formControlName="attendanceSheet" required>
+                        <mat-option *ngFor="let a of attendanceSheet" [value]="a.value">{{a.value}}</mat-option>
+                        <mat-option *ngIf="attendanceSheet.length < 1">No content</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fiscal Year</mat-label>
+                    <input matInput formControlName="fiscalYear" placeholder="Fiscal Year">
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Salary Month No</mat-label>
+                    <input matInput placeholder="Salary Month No" formControlName="salaryMonthNo">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Salary Year</mat-label>
+                    <input matInput placeholder="Salary Year" formControlName="salaryYear">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Month Order </mat-label>
+                    <input matInput placeholder=" Month Order" formControlName="monthOrder">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Total Days In Month </mat-label>
+                    <input matInput placeholder=" Total Days In Month " formControlName="totalDaysInMonth">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Total Working Days </mat-label>
+                    <input matInput placeholder=" Total Working Days " formControlName="totalWorkingDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Leave Days </mat-label>
+                    <input matInput placeholder="Leave Days" formControlName="leaveDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Absent Days </mat-label>
+                    <input matInput placeholder="Absent Days" formControlName="absentDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Total Holidays </mat-label>
+                    <input matInput placeholder="Total Holidays" formControlName="totalHolidays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Total Worked Days </mat-label>
+                    <input matInput placeholder="Total Worked Days" formControlName="totalWorkedDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Total Salary Days </mat-label>
+                    <input matInput placeholder="Total Salary Days" formControlName="totalSalaryDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Allowance Days </mat-label>
+                    <input matInput placeholder="Allowance Days" formControlName="allowanceDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave WOP Days </mat-label>
+                    <input matInput placeholder="Leave WOP Days" formControlName="leaveWOPDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Adj Days</mat-label>
+                    <input matInput placeholder="Adj Days" formControlName="adjDays">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date From</mat-label>
+                    <input matInput placeholder="Date From" (click)="fdate.open()" (focus)="fdate.open()" [matDatepicker]="fdate" formControlName="dateFrom">
+                    <mat-datepicker #fdate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.logDate">{{displayMessage?.logDate}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date From Nepali</mat-label>
+                    <input matInput placeholder="Date From Nepali" (click)="fndate.open()" (focus)="fndate.open()" [matDatepicker]="fndate" formControlName="dateFromNepali">
+                    <mat-datepicker #fndate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.logDate">{{displayMessage?.logDate}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date To</mat-label>
+                    <input matInput placeholder="Date To" (click)="tdate.open()" (focus)="tdate.open()" [matDatepicker]="tdate" formControlName="dateTo">
+                    <mat-datepicker #tdate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date To Nepali</mat-label>
+                    <input matInput placeholder="Date To Nepali" (click)="tndate.open()" (focus)="tndate.open()" [matDatepicker]="tndate" formControlName="dateToNepali">
+                    <mat-datepicker #tndate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Different From Salary Period </mat-label>
+                    <input matInput placeholder=" Leave Different From Salary Period" formControlName="leaveDifferentFromSalaryPeriod">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Date From</mat-label>
+                    <input matInput placeholder="Leave Date From" (click)="ldate.open()" (focus)="ldate.open()" [matDatepicker]="ldate" formControlName="leaveDateFrom">
+                    <mat-datepicker #ldate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Date From Nepali</mat-label>
+                    <input matInput placeholder="Leave Date From Nepali" (click)="lndate.open()" (focus)="lndate.open()" [matDatepicker]="lndate" formControlName="leaveDateFromNepali">
+                    <mat-datepicker #lndate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Date To</mat-label>
+                    <input matInput placeholder="Leave Date To" (click)="ltdate.open()" (focus)="ltdate.open()" [matDatepicker]="ltdate" formControlName="leaveDateTo">
+                    <mat-datepicker #ltdate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Date To Nepali </mat-label>
+                    <input matInput placeholder="Leave Date To Nepali" (click)="ltndate.open()" (focus)="ltndate.open()" [matDatepicker]="ltndate" formControlName="leaveDateToNepali">
+                    <mat-datepicker #ltndate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Over Time</mat-label>
+                    <input matInput placeholder="Over Time" formControlName="overTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Leave Details </mat-label>
+                    <input matInput placeholder=" Leave Details" formControlName="leaveDetails">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Field Work Days </mat-label>
+                    <input matInput placeholder="Field Work Days " formControlName="fieldWorkDays">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Off Day Present </mat-label>
+                    <input matInput placeholder="Off Day Present" formControlName="offDayPresent">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Attendance </mat-label>
+                    <mat-select formControlName="attendance" placeholder="Attendance" required>
+                        <mat-option *ngFor="let a of attendances" [value]="a.value">{{a.value}}</mat-option>
+                        <mat-option *ngIf="attendances.length < 1">No content</mat-option>
+                    </mat-select>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.attendanceCode">{{displayMessage?.attendanceCode}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Off Day OT</mat-label>
+                    <input matInput placeholder="Off Day OT" formControlName="offDayOT">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Daily Hour</mat-label>
+                    <input matInput placeholder=" Daily Hour" formControlName="dailyHour">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Monthly Attendance Master</mat-label>
+                    <input matInput placeholder="Monthly Attendance Master" formControlName="monthlyAttendanceMaster">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,151 @@
+<div cdkDrag [cdkDragRootElement]="'.cdk-overlay-pane'" [cdkDragBoundary]="'.cdk-overlay-container'">
+    <form class="kt-portlet mb-0 shadow-none" [formGroup]="msForm" (ngSubmit)="saveChanges()" autocomplete="off">
+        <div matDialogTitle class="kt-portlet__head px-0" cdkDragHandle>
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    {{data?.id >0 ? 'Update a Mail Server':'Add a new Mail Server'}}
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-group">
+                    <button type="button" (click)="onCancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                        <i class="la la-close"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                    <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                        *ngIf="responseMessage || errors?.length>0">
+                        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                        <div class="alert-text">
+                            <span *ngIf="errors?.length > 0; else msgBlock">
+                                <span class="row" [@fadeIn]="errors?.length">
+                                    <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                    <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                                </span>
+                            </span>
+                            <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" (click)="clearErrors()" aria-label="Close">
+                                <span aria-hidden="true"><i class="la la-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div matDialogContent>
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Mail Server Title</mat-label>
+                        <input formControlName="title" matInput placeholder="Mail Title. e.g. Vacancy portal, Support"
+                            required>
+                        <mat-error class="kt-font-danger" *ngIf="displayMessage?.title">
+                            {{displayMessage?.title}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Company/Employer</mat-label>
+                        <mat-select disableRipple formControlName="userGuid" placeholder="Select a Company/Employer">
+                            <mat-option *ngFor="let c of employers | async" [value]="c.key">{{c.value}}</mat-option>
+                        </mat-select>
+                        <i matSuffix matTooltipPosition="above" matTooltipClass="kt-font-warning kt-font-boldest"  [matTooltip]="accountInfo" class="flaticon-questions-circular-button kt-font-info ml-2" style="font-size: 25px;"></i>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12 mat-form-field__box">
+                    <div class="row mx-0">
+                        <div class="col-md-3 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Mail Server / Host</mat-label>
+                                <input formControlName="host" matInput placeholder="Server Host" required>
+                                <mat-error class="kt-font-danger" *ngIf="displayMessage?.host">
+                                    {{displayMessage?.host}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Port</mat-label>
+                                <input formControlName="port" matInput placeholder="Server Port" required>
+                                <mat-error class="kt-font-danger" *ngIf="displayMessage?.port">
+                                    {{displayMessage?.port}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3" style="display: flex;align-items: center;padding-bottom: 15px;">
+                            <mat-checkbox #rq matTooltip="Make this setting as system default. "
+                                formControlName="isDefault">Make Default?</mat-checkbox>
+                        </div>
+                        <div class="col-md-4" style="display: flex;align-items: center;padding-bottom: 15px;">
+                            <mat-checkbox #rq matTooltip="Does this server needs to get authenticated."
+                                formControlName="requiresAuthentication">Requires Authentication?</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div [@fadeIn]="rq.checked" class="col-md-12 mat-form-field__box">
+                    <div class="row mx-0" *ngIf="rq.checked">
+                        <div class="col-md-4 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Username</mat-label>
+                                <input #u formControlName="username" matInput placeholder="username" required>
+                                <mat-error class="kt-font-danger" *ngIf="displayMessage?.username">
+                                    {{displayMessage?.username}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Password</mat-label>
+                                <input #p1 formControlName="password" type="password" matInput placeholder="Password" required>
+                                <mat-error class="kt-font-danger" *ngIf="displayMessage?.password">
+                                    {{displayMessage?.password}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Confirm Password</mat-label>
+                                <input #p2 type="password" formControlName="confirmPassword" matInput
+                                    placeholder="Confirm Password" required>
+                                <mat-error class="kt-font-danger" *ngIf="displayMessage?.confirmPassword">
+                                    {{displayMessage?.confirmPassword}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div [ngClass]="{'btn-test-connection__wrap':u.value && p1.value && p2.value && displayMessage?.confirmPassword === ''}"  [@fadeIn]="u.value && p1.value && p2.value && displayMessage?.confirmPassword === ''" class="col-md-2">
+                            <button [disabled]="isTestinfCon" (click)="testConnection()" *ngIf="u.value && p1.value && p2.value && displayMessage?.confirmPassword === ''" type="button" class="btn btn-outline-hover-success btn-sm btn-square">Test Connection</button>
+                            <mat-progress-bar class="col-12 px-0" color="warn" mode="indeterminate" *ngIf="isTestinfCon"></mat-progress-bar>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" placeholder="Mail server description" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div matDialogActions>
+            <div style="display: flex; width:100%; justify-content: center">
+                <div>
+                    <button [disabled]="isWorking || isTestinfCon" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1"
+                        matTooltip="Save Changes" matTooltipPosition="above">
+                        <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                        <ng-template #working>
+                            <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                        </ng-template>
+                    </button>
+                    <button (click)="onCancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                        matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

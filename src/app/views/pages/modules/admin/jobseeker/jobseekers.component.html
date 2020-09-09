@@ -1,0 +1,157 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Job Seekers</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">List of Job Seekers</span>
+            <!-- <a href="javascript:;" class="btn btn-label-primary btn-bold btn-icon-h">
+            Add New
+        </a> -->
+            <button *ngIf="hasFilter || query?.filters.length >0 || query?.sort?.orderDirection"
+                [@fadeIn]="query?.filters.length" (click)="resetFilters()" type="button"
+                class="btn btn-label-danger btn-bold btn-icon-h">
+                Clear Filters
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+
+                <!-- <div class="dropdown dropdown-inline" data-placement="left" ngbTooltip="Quick actions">
+                <a [matMenuTriggerFor]="menu" href="javascript:;" class="btn btn-brand btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-plus"></i>
+                </a>
+                <mat-menu #menu="matMenu">
+
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-plus"></i> New Report</a>
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-user"></i> Add Customer</a>
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-cloud-download"></i> New
+                        Download</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:;"><i class="la la-cog"></i> Settings</a>
+
+                </mat-menu>
+            </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet position-relative mb-0 px-4">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div style="height: calc(100vh - 325px)" *ngIf="!(isLoadingResults || dataSource.data?.length >0 ) else table"
+        class="alert alert-secondary" role="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information" style="font-size: 2.4rem"></i> No record found</h4>
+        </div>
+    </div>
+    <ng-template #table>
+        <div class="table-container" [perfectScrollbar]="{wheelPropagation: false}" style="height: calc(100vh - 295px)">
+            <mat-table [trackBy]="trackById" [@collectionInOut]="dataSource.data?.length" matSort
+                [dataSource]="dataSource" class="table-borderless" multiTemplateDataRows>
+                <ng-container matColumnDef="details">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width"></mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="cell-max-width">
+                        <button (click)="rowDetailExpand(row)" type="button"
+                            class="btn btn-outline-hover-info btn-sm btn-icon btn-circle">
+                            <i style="transition: transform .2s"
+                                [ngStyle]="{'transform': row === expandedElement ? 'rotate(90deg)' : 'rotate(0deg)'}"
+                                class="flaticon2-right-arrow"></i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width justify-content-center">
+                        <mat-checkbox [disabled]="dataSource.data?.length <=0" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="cell-max-width justify-content-center">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="sn">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-100"> SN. </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-100">
+                        {{el.sn}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'email')" [headerLabel]="'Email'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.email}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fullName">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'fullName')" [headerLabel]="'Name'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{(el.fullName || '-')}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="gender">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'gender')" [headerLabel]="'Gender'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{(el.gender|| '-')}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="age">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'age')" [headerLabel]="'Age'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.age}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="maritalStatus">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'maritalStatus')"
+                            [headerLabel]="'Marital Status'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.maritalStatus}} </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="expandedDetail">
+                    <mat-cell *matCellDef="let el" [attr.colspan]="displayedColumns.length">
+                        <expanded-lazy-content *ngIf="el === expandedElement"></expanded-lazy-content>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row class="expanded-detail" [@fadeInOutStagger]="row === expandedElement ? 1 : 0"
+                    [ngStyle]="rowHeight(row)" *matRowDef="let row; columns: ['expandedDetail'];"></mat-row>
+            </mat-table>
+        </div>
+    </ng-template>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <mat-paginator [disabled]="!(isLoadingResults || dataSource.data?.length >0 )" [pageSize]="50"
+                [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

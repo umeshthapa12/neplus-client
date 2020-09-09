@@ -1,0 +1,396 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="serviceInfoForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{(data?.id > 0 ? 'Change Service Information ' :'Add Service Information ') }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" matDialogContent>
+        <div class="col-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}" *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                        <span class="row" [@fadeIn]="errors?.length">
+                            <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                            <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                        </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" (click)="clearErrors()" class="close" aria-label="Close">
+                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Code</mat-label>
+                    <input matInput formControlName="empCode" readonly>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Group</mat-label>
+                    <mat-select formControlName="empGroup">
+                        <mat-option *ngFor="let e of empGroups" [value]="e.value">{{e.value}}</mat-option>
+                        <mat-option *ngIf="empGroups.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Location</mat-label>
+                    <mat-select formControlName="location" required>
+                        <mat-option *ngFor="let l of locations" [value]="l.value">{{l.value}}</mat-option>
+                        <mat-option *ngIf="locations.length < 1">No content</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.location">{{displayMessage?.location}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Branch</mat-label>
+                    <mat-select formControlName="branch" required>
+                        <mat-option *ngFor="let b of branchs" [value]="b.value">{{b.value}}</mat-option>
+                        <mat-option *ngIf="status.length < 1">No content</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.branch">{{displayMessage?.branch}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <mat-select formControlName="department" required>
+                        <mat-option *ngFor="let d of departments" [value]="d.value">{{d.value}}</mat-option>
+                        <mat-option *ngIf="departments.length < 1">No content</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.department">{{displayMessage?.department}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Designation</mat-label>
+                    <mat-select formControlName="designation">
+                        <mat-option *ngFor="let d of designations" [value]="d.value">{{d.value}}</mat-option>
+                        <mat-option *ngIf="designations.length < 1">No content</mat-option>
+                    </mat-select>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.designation">{{displayMessage?.designation}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Unit</mat-label>
+                    <mat-select formControlName="unit">
+                        <mat-option *ngFor="let u of units" [value]="u.value">{{u.value}}</mat-option>
+                        <mat-option *ngIf="units.length < 1">No content</mat-option>
+                    </mat-select>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.unit">{{displayMessage?.unit}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service Group</mat-label>
+                    <mat-select formControlName="serviceGroup">
+                        <mat-option *ngFor="let s of serviceGroups" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="serviceGroups.length < 1">No content</mat-option>
+                    </mat-select>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.serviceGroup">{{displayMessage?.serviceGroup}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service </mat-label>
+                    <mat-select formControlName="service">
+                        <mat-option *ngFor="let s of services" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="services.length < 1">No content</mat-option>
+                    </mat-select>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.service">{{displayMessage?.service}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service Sub Group</mat-label>
+                    <mat-select formControlName="serviceSubGroup">
+                        <mat-option *ngFor="let s of serviceSubGroups" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="serviceSubGroups.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Darbandi</mat-label>
+                    <mat-select formControlName="darbandi">
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Deputation</mat-label>
+                    <mat-select formControlName="deputation">
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contract/Employment Type</mat-label>
+                    <mat-select formControlName="contractType">
+                        <mat-option *ngFor="let c of contractType" [value]="c.value">{{c.value}}</mat-option>
+                        <mat-option *ngIf="contractType.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Level/Position</mat-label>
+                    <mat-select formControlName="employeeLevel">
+                        <mat-option *ngFor="let l of employeeLevel" [value]="l.value">{{l.value}}</mat-option>
+                        <mat-option *ngIf="employeeLevel.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Job Post</mat-label>
+                    <input matInput formControlName="empJobPost" placeholder="Employee Job Post">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Remuneration Group</mat-label>
+                    <mat-select formControlName="remunerationGroup">
+                        <mat-option *ngFor="let r of remunerations" [value]="r.value">{{r.value}}</mat-option>
+                        <mat-option *ngIf="remunerations.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Appointment Type</mat-label>
+                    <mat-select formControlName="appointmentType">
+                        <mat-option *ngFor="let a of appointments" [value]="a.value">{{a.value}}</mat-option>
+                        <mat-option *ngIf="appointments.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date Of Join</mat-label>
+                    <input matInput formControlName="dateOfJoin" (click)="jdate.open()" (focus)="jdate.open()" [matDatepicker]="jdate" placeholder="Date Of Join">
+                    <mat-datepicker #jdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date Of Join Nepali</mat-label>
+                    <input matInput formControlName="dateOfJoinNepali" (click)="jndate.open()" (focus)="jndate.open()" [matDatepicker]="jndate" placeholder="Date Of Join Nepali">
+                    <mat-datepicker #jndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Contract Start Date </mat-label>
+                    <input matInput formControlName="contractStartDate" (click)="csdate.open()" (focus)="csdate.open()" [matDatepicker]="csdate" placeholder="Contract Start Date">
+                    <mat-datepicker #csdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Contract Start Date Nepali</mat-label>
+                    <input matInput formControlName="contractStartDateNepali" (click)="csndate.open()" (focus)="csndate.open()" [matDatepicker]="csndate" placeholder="Contract Start Date Nepali">
+                    <mat-datepicker #csndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Permanent</mat-label>
+                    <input matInput formControlName="dateOfPermanent" (click)="pdate.open()" (focus)="pdate.open()" [matDatepicker]="pdate" placeholder="Date Of Permanent">
+                    <mat-datepicker #pdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Permanent Nepali</mat-label>
+                    <input matInput formControlName="dateOfPermanentNepali" (click)="pndate.open()" (focus)="pndate.open()" [matDatepicker]="pndate" placeholder="Date Of Permanent Nepali">
+                    <mat-datepicker #pndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Transfer</mat-label>
+                    <input matInput formControlName="dateOfTransfer" (click)="tdate.open()" (focus)="tdate.open()" [matDatepicker]="tdate" placeholder="Date Of Transfer">
+                    <mat-datepicker #tdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Transfer Nepali</mat-label>
+                    <input matInput formControlName="dateOfTransferNepali" (click)="tndate.open()" (focus)="tndate.open()" [matDatepicker]="tndate" placeholder="Date Of Transfer Nepali">
+                    <mat-datepicker #tndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Promotion</mat-label>
+                    <input matInput formControlName="dateOfPromotion" (click)="prdate.open()" (focus)="prdate.open()" [matDatepicker]="prdate" placeholder="Date Of Promotion ">
+                    <mat-datepicker #prdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Date of Promotion Nepali</mat-label>
+                    <input matInput formControlName="dateOfPromotionNepali" (click)="prndate.open()" (focus)="prndate.open()" [matDatepicker]="prndate" placeholder="Date Of Promotion Nepali ">
+                    <mat-datepicker #prndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Probation Date</mat-label>
+                    <input matInput formControlName="probationDate" (click)="prodate.open()" (focus)="prodate.open()" [matDatepicker]="prodate" placeholder="Probation Date">
+                    <mat-datepicker #prodate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Probation Date Nepali</mat-label>
+                    <input matInput formControlName="probationDateNepali" (click)="prondate.open()" (focus)="prondate.open()" [matDatepicker]="prondate" placeholder="Probation Date Nepali">
+                    <mat-datepicker #prondate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of Last Service Renew</mat-label>
+                    <input matInput formControlName="dateOfLastServiceRenew" (click)="lsdate.open()" (focus)="lsdate.open()" [matDatepicker]="lsdate" placeholder="Date of Last Service Renew">
+                    <mat-datepicker #lsdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of Last Service Renew Nepali</mat-label>
+                    <input matInput formControlName="dateOfLastServiceRenewNepali" (click)="lsndate.open()" (focus)="lsndate.open()" [matDatepicker]="lsndate" placeholder="Date of Last Service Renew Nepali">
+                    <mat-datepicker #lsndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service Duration End Date</mat-label>
+                    <input matInput formControlName="serviceDurationEndDate" (click)="sddate.open()" (focus)="sddate.open()" [matDatepicker]="sddate" placeholder="Service Duration End Date">
+                    <mat-datepicker #sddate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Service Duration End Date Nepali</mat-label>
+                    <input matInput formControlName="serviceDurationEndDateNepali" (click)="sdndate.open()" (focus)="sdndate.open()" [matDatepicker]="sdndate" placeholder="Service Duration End Date Nepali">
+                    <mat-datepicker #sdndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Due Date of Retirement</mat-label>
+                    <input matInput formControlName="dueDateOfRetirement" (click)="ddate.open()" (focus)="ddate.open()" [matDatepicker]="ddate" placeholder="Due Date of Retirement">
+                    <mat-datepicker #ddate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Due Date of Retirement Nepali</mat-label>
+                    <input matInput formControlName="dueDateOfRetirementNepali" (click)="dndate.open()" (focus)="dndate.open()" [matDatepicker]="dndate" placeholder="Due Date of Retirement Nepali">
+                    <mat-datepicker #dndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Compulsory Retirement Date</mat-label>
+                    <input matInput formControlName="compulsoryRetirementDate" (click)="cdate.open()" (focus)="cdate.open()" [matDatepicker]="cdate" placeholder="Compulsory Retirement Date">
+                    <mat-datepicker #cdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Compulsory Retirement Date Nepali</mat-label>
+                    <input matInput formControlName="compulsoryRetirementDateNepali" (click)="cndate.open()" (focus)="cndate.open()" [matDatepicker]="cndate" placeholder="Compulsory Retirement Date Nepali">
+                    <mat-datepicker #cndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of Stop Payment</mat-label>
+                    <input matInput formControlName="dateOfStopPayment" (click)="spdate.open()" (focus)="spdate.open()" [matDatepicker]="spdate" placeholder="Date of Stop Payment">
+                    <mat-datepicker #spdate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of Stop Payment Nepali</mat-label>
+                    <input matInput formControlName="dateOfStopPaymentNepali" (click)="spndate.open()" (focus)="spndate.open()" [matDatepicker]="spndate" placeholder="Date of Stop Payment Nepali">
+                    <mat-datepicker #spndate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contract Period</mat-label>
+                    <input matInput formControlName="contractPeriod" placeholder="Contract Period">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Working Status</mat-label>
+                    <mat-select formControlName="workingStatus">
+                        <mat-option *ngFor="let w of workingStatus" [value]="w.value">{{w.value}}</mat-option>
+                        <mat-option *ngIf="workingStatus.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Supervisor Code</mat-label>
+                    <mat-select formControlName="supervisorCode">
+                        <mat-option *ngFor="let s of supervisors" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="supervisors.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="status.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

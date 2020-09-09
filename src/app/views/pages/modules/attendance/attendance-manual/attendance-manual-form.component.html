@@ -1,0 +1,118 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="attendanceManualForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id > 0 ? ' Change Attendance Manual Form' :'Add Attendance Manual' }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Device Log</mat-label>
+                <mat-select formControlName="deviceLog" required>
+                    <mat-option *ngFor="let d of deviceLog" [value]="d.value">{{d.value}}</mat-option>
+                    <mat-option *ngIf="deviceLog.length < 1">No content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Log Date</mat-label>
+                <input matInput placeholder="Log Date" (click)="picker.open()" (focus)="picker.open()" [matDatepicker]="picker" formControlName="logDate" required>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.logDate">{{displayMessage?.logDate}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Log Date Nepali</mat-label>
+                <input matInput placeholder="Log Date Nepali" (click)="npicker.open()" (focus)="npicker.open()" [matDatepicker]="npicker" formControlName="logDateNepali">
+                <mat-datepicker #npicker></mat-datepicker>
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Log Time</mat-label>
+                <input matInput placeholder=" Log Time" formControlName="logTime">
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Attendance Code</mat-label>
+                <mat-select formControlName="attendanceCode" placeholder="Attendance Code" required>
+                    <mat-option *ngFor="let a of attendanceCode" [value]="a.value">{{a.value}}</mat-option>
+                    <mat-option *ngIf="attendanceCode.length < 1">No content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.attendanceCode">{{displayMessage?.attendanceCode}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Device Id</mat-label>
+                <mat-select formControlName="deviceId" placeholder="Device Id">
+                    <mat-option *ngFor="let d of deviceIds" [value]="d.value">{{d.value}}</mat-option>
+                    <mat-option *ngIf="deviceIds.length < 1">No content</mat-option>
+                </mat-select>
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.attendanceCode">{{displayMessage?.attendanceCode}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Direction</mat-label>
+                <input matInput placeholder="Direction" formControlName="direction">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Request</mat-label>
+                <mat-select formControlName="request" placeholder="Request">
+                    <mat-option *ngFor="let r of requests" [value]="r.value">{{r.value}}</mat-option>
+                    <mat-option *ngIf="requests.length < 1">No content</mat-option>
+                </mat-select>
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.attendanceCode">{{displayMessage?.attendanceCode}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Code</mat-label>
+                <input matInput placeholder="Employee Code" formControlName="empCode">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Log Source </mat-label>
+                <input matInput placeholder="Log Source" formControlName="logSource">
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

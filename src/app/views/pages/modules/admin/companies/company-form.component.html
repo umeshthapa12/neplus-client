@@ -1,0 +1,286 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="companyForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Add new company
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button type="button" (click)="onCancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i
+                        class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div matDialogContent>
+        <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+            <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                *ngIf="responseMessage || errors?.length>0">
+                <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                <div class="alert-text">
+                    <span *ngIf="errors?.length > 0; else msgBlock">
+                        <span class="row" [@fadeIn]="errors?.length">
+                            <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                            <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                        </span>
+                    </span>
+                    <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                </div>
+                <div class="alert-close">
+                    <button type="button" class="close" (click)="clearErrors()" aria-label="Close">
+                        <span aria-hidden="true"><i class="la la-close"></i></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!(data?.id>0)" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-12 h5 kt-font-primary">Account Info</div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input formControlName="username" matInput placeholder="username" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.username">{{displayMessage?.username}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="password" [type]="hideNew ? 'password' : 'text'" matInput
+                        placeholder="Account password" required>
+                    <mat-icon matSuffix class="btn btn-outline-hover-info btn-circle btn-icon"
+                        (click)="hideNew = !hideNew" style="height: 24px;width: 24px;">{{hideNew ? 'visibility_off':
+                        'visibility'}} </mat-icon>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.password">{{displayMessage?.password}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Confirm Password</mat-label>
+                    <input compare="password" formControlName="cPassword" [type]="hideConfirm ? 'password' : 'text'"
+                        matInput placeholder="Confirm Account Password" required>
+                    <mat-icon matSuffix (click)="hideConfirm = !hideConfirm"
+                        class="btn btn-outline-hover-info btn-circle btn-icon" style="height: 24px;width: 24px;">{{hideConfirm ?
+                            'visibility_off': "visibility"}} </mat-icon>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.cPassword">{{displayMessage?.cPassword}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-2 pb-2 mb-4" style="background: #fafafa;">
+            <div class="col-12 h5 kt-font-primary">Profile Info</div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Organization Name</mat-label>
+                    <input formControlName="name" matInput placeholder="Name of a Company" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Organization Size</mat-label>
+                    <mat-select formControlName="employeeSize" placeholder="Select size of employees" required>
+                        <mat-option value="1-10 employees">1-10 employees</mat-option>
+                        <mat-option value="10-50 employees">10-50 employees</mat-option>
+                        <mat-option value="50-100 employees">50-100 employees</mat-option>
+                        <mat-option value="more than 100 employees">more than 100 employees</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.employeeSize">
+                        {{displayMessage?.employeeSize}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Company Ownership</mat-label>
+                    <mat-select formControlName="companyTypeId" [placeholder]="(companyType$ | async)?.length>0?'Select a company ownership':'No Content'" required>
+                        <mat-option *ngFor="let c of companyType$ | async" [value]="c.key">{{c.value}}</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.companyTypeId">
+                        {{displayMessage?.companyTypeId}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input formControlName="address" matInput placeholder="Address of Organization/Company" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.address">{{displayMessage?.address}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div [ngClass]="{'col-md-3':isOtherCategory, 'col-md-6': !isOtherCategory}">
+                <div class="form-group ">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                        <mat-label>Category/Industry</mat-label>
+                        <mat-select formControlName="categoryId" [disableRipple]="true"
+                            (selectionChange)="categoryValueChange($event)" formControlName="categoryId"
+                            [placeholder]="(categories$ | async)?.length>0?'Select a company category':'No Content'" required>
+                            <mat-option *ngFor="let c of categories$ | async" [value]="c.key">{{c.value}}</mat-option>
+                        </mat-select>
+                        <mat-error class="m--font-danger" *ngIf="displayMessage?.categoryId">
+                            {{displayMessage?.categoryId}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div [ngClass]="{'col-md-3':isOtherCategory}" *ngIf="isOtherCategory">
+                <div class="form-group ">
+                    <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                        <mat-label>Other Category/Industry</mat-label>
+                        <input matInput formControlName="otherCategory" placeholder="Enter other category/industry"
+                            type="text" required>
+                        <mat-error class="kt-font-danger" *ngIf="displayMessage?.otherCategory">
+                            {{displayMessage?.otherCategory}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput placeholder="Company email">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Website</mat-label>
+                    <input formControlName="url" matInput placeholder="Website link">
+                </mat-form-field>
+            </div>
+
+            <div [@fadeIn]="contactControls()?.controls?.length" class="col-12" formArrayName="phoneNumbers"
+                id="contact-phone-wrap">
+                <div *ngFor="let c of contactControls().controls; let i=index;">
+                    <div [formGroupName]="i" style="display: flex; justify-content: stretch; flex-wrap: wrap">
+                        <div class="col-md-4 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>Phone Type</mat-label>
+                                <mat-select [disableRipple]="true" #pt reqired value="Office"
+                                    formControlName="phoneType">
+                                    <mat-option *ngFor="let p of phoneType" [value]="p">
+                                        {{p}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="m--font-danger" *ngIf="displayMessage?.phoneType">
+                                    {{displayMessage?.phoneType}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 px-0">
+                            <mat-form-field appearance="outline" floatLabel="always">
+                                <mat-label>{{pt?.value}} Number</mat-label>
+                                <input formControlName="number" matInput type="text"
+                                    [placeholder]="'Enter '+pt?.value+' Number'" required>
+                                <mat-error class="m--font-danger"
+                                    *ngIf="c.get('number')?.errors && c.get('number')?.errors['maxlength']">
+                                    Maximum number length is 15
+                                </mat-error>
+                                <mat-error class="m--font-danger"
+                                    *ngIf="c.get('number')?.dirty && c.get('number')?.invalid && !c.get('number')?.errors['maxlength']">
+                                    Contact number is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 px-0" style="display: flex;
+                                justify-content: space-evenly;
+                                align-items: center;
+                                height: 50px;">
+                            <button [disabled]="contactControls()?.controls?.length == 1" type="button"
+                                (click)="contactNumberAction(i)"
+                                class="btn btn-hover-danger btn-elevate btn-circle btn-icon" matTooltip="Remove this">
+                                <i class="flaticon-delete"></i>
+                            </button>
+                            <button type="button" (click)="contactNumberAction(-1)"
+                                class="btn btn-hover-info btn-elevate btn-circle btn-icon" matTooltip="Add another">
+                                <i class="flaticon-add"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>About Company/Organization</mat-label>
+                    <!--Just to make same design as material formField. Ugly fix -->
+                    <input type="text" matInput formControlName="about" required [hidden]="true">
+                    <!--this is the main editor to working with-->
+                    <div #aboutCompany style="min-height:100px; max-height: 600px; overflow: auto; border:none"></div>
+                    <!--Helper to display an eror message-->
+                    <mat-error class="" *ngIf="displayMessage?.about"> {{displayMessage?.about}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-2 pb-2 mb-4" style="background: #fdfdff;">
+            <div class="col-12 h5 kt-font-primary">Contact Person Info</div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Name</mat-label>
+                    <input formControlName="contactPersonName" matInput placeholder="Person fullname" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.contactPersonName">
+                        {{displayMessage?.contactPersonName}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Designation</mat-label>
+                    <input formControlName="contactPersonDesignation" matInput placeholder="Person position">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Cell / Phone</mat-label>
+                    <input formControlName="contactPersonPhone" matInput placeholder="Person's contact number" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.contactPersonPhone">
+                        {{displayMessage?.contactPersonPhone}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Address</mat-label>
+                    <input formControlName="contactPersonAddress" matInput placeholder="Person address" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.contactPersonAddress">
+                        {{displayMessage?.contactPersonAddress}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Email</mat-label>
+                    <input formControlName="contactPersonEmail" matInput placeholder="Person email">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Person Description</mat-label>
+                    <input formControlName="contactPersonDescription" matInput placeholder="Person description">
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="!(data?.id>0)" class="row mb-5 pt-2" style="background: #fafafa;">
+            <div class="col-12 h5 kt-font-primary">Company Profile Picture / Logo</div>
+            <image-ui (onImageCropped)="onImageCropped($event)"></image-ui>
+        </div>
+    </div>
+    <div matDialogActions>
+        <div style="display: flex; width:100%; justify-content: center">
+            <div>
+                <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes"
+                    matTooltipPosition="above">
+                    <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                    <ng-template #working>
+                        <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                    </ng-template>
+
+                </button>
+                <button (click)="onCancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                    matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+            </div>
+        </div>
+
+    </div>
+</form>

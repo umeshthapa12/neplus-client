@@ -1,0 +1,290 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Service Information</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Service Information List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade mt-5" *ngIf="isLoading">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && serviceInformations?.length <= 0">
+        <div class="text-center">
+            No any information Found
+        </div>
+    </div>
+    <div [@fadeInOutStagger]="serviceInformations?.length" class="row" *ngIf="!isLoading &&  serviceInformations?.length > 0;">
+        <div class="col-md-12 mb-3 " *ngFor="let s of serviceInformations; trackBy:trackById">
+            <mat-card class="mat-elevation-z1 mat-elevation-z7-custom">
+                <mat-card-content class="mb-0 card-content-text">
+                    <div class="kt-infobox__header">
+                        <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title"> Service
+                            Information{{s?.appraisal}}</span>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Emp Code</div>
+                                <div class="col-md-7">{{s?.empCode}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Emp Group </div>
+                                <div class="col-md-7">{{s?.empGroup}} </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Location</div>
+                                <div class="col-md-7">{{s?.location}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Branch</div>
+                                <div class="col-md-7">{{s?.branch}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Department</div>
+                                <div class="col-md-7">{{s?.department}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Designation</div>
+                                <div class="col-md-7">{{s?.designation}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Unit</div>
+                                <div class="col-md-7">{{s?.unit}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Service Group </div>
+                                <div class="col-md-7">{{s?.serviceGroup}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Service </div>
+                                <div class="col-md-7">{{s?.service}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Service Sub Group</div>
+                                <div class="col-md-7">{{s?.serviceSubGroup}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Darbandi </div>
+                                <div class="col-md-7">{{s?.darbandi}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Deputation </div>
+                                <div class="col-md-7">{{s?.deputation}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Contract Type</div>
+                                <div class="col-md-7">{{s?.contractType}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Employee Level/Position: </div>
+                                <div class="col-md-7">{{s?.employeeLevel}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Employee Job Post </div>
+                                <div class="col-md-7">{{s?.empJobPost}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Remuneration Group </div>
+                                <div class="col-md-7">{{s?.remunerationGroup}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Appointment Type </div>
+                                <div class="col-md-7">{{s?.appointmentType}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Date of Join </div>
+                                <div class="col-md-7">{{s?.dateOfJoin}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Join Nepali: </div>
+                                <div class="col-md-7">{{s?.dateOfJoinNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Contract Start Date </div>
+                                <div class="col-md-7">{{s?.contractStartDate}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Contract Start Date Nepali </div>
+                                <div class="col-md-7">{{s?.contractStartDateNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Date of Permanent </div>
+                                <div class="col-md-7">{{s?.dateOfPermanent}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Permanent Nepali </div>
+                                <div class="col-md-7">{{s?.dateOfPermanentNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Date of Transfer: </div>
+                                <div class="col-md-7">{{s?.dateOfTransfer}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Transfer Nepali </div>
+                                <div class="col-md-7">{{s?.dateOfTransferNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Date of Promotion </div>
+                                <div class="col-md-7">{{s?.dateOfPromotion}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Promotion Nepali </div>
+                                <div class="col-md-7">{{s?.dateOfPromotionNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Probation Date </div>
+                                <div class="col-md-7">{{s?.probationDate}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Probation Date Nepali </div>
+                                <div class="col-md-7">{{s?.probationDateNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Date of Last Service Renew </div>
+                                <div class="col-md-7">{{s?.dateOfLastServiceRenew}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Last Service Renew Nepali </div>
+                                <div class="col-md-7">{{s?.dateOfLastServiceRenewNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Service Duration End Date </div>
+                                <div class="col-md-7">{{s?.serviceDurationEndDate}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Service Duration End Date Nepali </div>
+                                <div class="col-md-7">{{s?.serviceDurationEndDateNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Due Date of Retirement </div>
+                                <div class="col-md-7">{{s?.dueDateOfRetirement}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Due Date of Retirement Nepali</div>
+                                <div class="col-md-7">{{s?.dueDateOfRetirementNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info">Compulsory Retirement Date </div>
+                                <div class="col-md-7">{{s?.compulsoryRetirementDate}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Compulsory Retirement Date Nepali </div>
+                                <div class="col-md-7">{{s?.compulsoryRetirementDateNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Stop Payment </div>
+                                <div class="col-md-7">{{s?.dateOfStopPayment}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Date of Stop Payment Nepali </div>
+                                <div class="col-md-7">{{s?.dateOfStopPaymentNepali}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Contract Period </div>
+                                <div class="col-md-7">{{s?.contractPeriod}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Working Status </div>
+                                <div class="col-md-7">{{s?.workingStatus}}</div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                            <div class="row">
+                                <div class="col-md-5 kt-font-info"> Supervisor Code </div>
+                                <div class="col-md-7">{{s?.supervisorCode}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col" style="min-height: 40px;">
+                            <div style="display: flex; justify-content: center">
+                                <button (click)="onAction(s.id)" type="button" class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="flaticon-edit mr-1"></i></button>
+                                <button (click)="onDelete(s.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1" matTooltip="Delete" matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

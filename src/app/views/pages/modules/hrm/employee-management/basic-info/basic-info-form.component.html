@@ -1,0 +1,245 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="employeeForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 pt-0">
+        <div class="kt-portlet__head-label">
+            <h1 class="kt-portlet__head-title">
+                Form
+            </h1>
+        </div>
+
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button (click)="cancel()" type="button" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i
+                        class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" matDialogContent>
+        <div class="col-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                    *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                            <span class="row" [@fadeIn]="errors?.length">
+                                <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                            </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-12 h5 kt-font-primary">Basic Information</div>
+            <div class="col-md-5">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Code</mat-label>
+                    <input matInput formControlName="empCode" placeholder="Enter Employee Code" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.empCode">{{displayMessage?.empCode}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-7">
+                <mat-form-field appearance="outline">
+                    <mat-label>Title</mat-label>
+                    <mat-select formControlName="title">
+                        <mat-option value="Developer">Developer</mat-option>
+                        <mat-option value="QC">QC</mat-option>
+                        <mat-option value="QA">QA</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName" placeholder="Enter first name" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.firstName">{{displayMessage?.firstName}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput formControlName="middleName" placeholder="Enter middle name">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName" placeholder="Enter first name" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.lastName">{{displayMessage?.lastName}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of birth</mat-label>
+                    <input (click)="d.open()" (focus)="d.open()" [matDatepicker]="d" matInput
+                        formControlName="dateOfBirth" placeholder="Enter date of birth">
+                    <mat-datepicker #d></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Marital Status</mat-label>
+                    <mat-select formControlName="maritalStatus">
+                        <mat-option value="Married">Married</mat-option>
+                        <mat-option value="Single">Single</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="Female">Female</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Religion</mat-label>
+                    <mat-select formControlName="religion">
+                        <mat-option value="Hindu">Hindu</mat-option>
+                        <mat-option value="Buddist">Buddist</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Blood Group</mat-label>
+                    <mat-select formControlName="bloodGroup">
+                        <mat-option value="A">A</mat-option>
+                        <mat-option value="B">B</mat-option>
+                        <mat-option value="AB">AB</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nationality</mat-label>
+                    <mat-select formControlName="nationality">
+                        <mat-option value="Nepal">Nepal</mat-option>
+                        <mat-option value="China">China</mat-option>
+                        <mat-option value="USA">USA</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Telephone no.</mat-label>
+                    <input matInput formControlName="telNo" placeholder="Enter telephone number">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Mobile no.</mat-label>
+                    <input matInput formControlName="mobileNumber" placeholder="Mobile number" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.mobileNumber">
+                        {{displayMessage?.mobileNumber}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" placeholder="Email Address" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.email">{{displayMessage?.email}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Alternative Email</mat-label>
+                    <input matInput formControlName="alternativeEmail" placeholder="Alternative Email Address">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Refrence Person</mat-label>
+                    <input matInput formControlName="refrencePerson" placeholder="Refrence Person">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Settlement Status</mat-label>
+                    <mat-select formControlName="settlementStatus">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                        <mat-option value="Pending">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-5">
+                <mat-form-field appearance="outline">
+                    <mat-label>Settlement Date</mat-label>
+                    <input matInput (click)="date.open()" (focus)="date.open()" [matDatepicker]="date"
+                        formControlName="settlementDate" placeholder="Select settlement date">
+                    <mat-datepicker #date></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Settlement Date(Nepali)</mat-label>
+               <input matInput>
+            </mat-form-field>
+        </div> -->
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select appearance="outline" formControlName="status">
+                        <mat-option value="Active">Active</mat-option>
+                        <mat-option value="Inactive">Inactive</mat-option>
+                        <mat-option value="Pending">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Settlement Remarks</mat-label>
+                    <textarea matInput formControlName="remarks"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div matDialogActions>
+        <div class="mat-dialog-action">
+            <div>
+                <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1"
+                    matTooltip="Save Changes" matTooltipPosition="above">
+                    <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                    <ng-template #working>
+                        <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                    </ng-template>
+                </button>
+                <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                    matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,100 @@
+<mat-progress-bar style="height: 2px;" *ngIf="isLoading" mode="indeterminate" color="warn"></mat-progress-bar>
+<div *ngIf="!isLoading && content?.email" class="row mx-0 px-3">
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Email</h3>
+                <span class="kt-widget1__desc">{{content?.email}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Name</h3>
+                <span class="kt-widget1__desc">{{(content?.fullName || '-')}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Date Of Birth</h3>
+                <span class="kt-widget1__desc">{{((content?.dateOfBirth | date) || '-')}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Age</h3>
+                <span class="kt-widget1__desc">{{(content?.age || '-')}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Gender</h3>
+                <span class="kt-widget1__desc">{{(content?.gender ||'-')}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Religion</h3>
+                <span class="kt-widget1__desc ">{{(content?.religion || '-')}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Marital Status</h3>
+                <span class="kt-widget1__desc">{{(content?.maritalStatus || '-')}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Nationality</h3>
+                <span class="kt-widget1__desc">{{(content?.nationality || '-')}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Present Address</h3>
+                <span class="kt-widget1__desc">{{(content?.presentAddress || '-')}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Permanent Address</h3>
+                <span class="kt-widget1__desc">{{(content?.permanentAddress || '-')}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Job Search Status</h3>
+                <span class="kt-widget1__desc">{{(content?.jobSearchStatus || '-')}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Career Summary</h3>
+                <span class="kt-widget1__desc">{{(content?.careerSummary || '-')}} </span>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div class="row mx-0 px-3" [style.height]="content?.aboutMe ? 'auto': '0px'">
+    <div class="kt-widget1 col-md-12 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">About Me</h3>
+                <span class="kt-widget1__desc kt-font-dark">
+                    <div #aboutMe style="min-height:100px; max-height: 600px; overflow: auto; border:none"></div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

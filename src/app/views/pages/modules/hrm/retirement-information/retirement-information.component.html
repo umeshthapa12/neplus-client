@@ -1,0 +1,158 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Retirement Information</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Retirement Information List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade" *ngIf="isLoading">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && retirements?.length <= 0">
+        <div class="text-center">
+            No any information Found
+        </div>
+    </div>
+    <div [@fadeInOutStagger]="retirements?.length" class="row" *ngIf="!isLoading &&  retirements?.length > 0;">
+        <div class="col-md-4 mb-3 " *ngFor="let r of retirements; trackBy:trackById">
+            <mat-card class="mat-elevation-z1 mat-elevation-z7-custom">
+                <mat-card-content class="mb-0 card-content-text">
+                    <div class="kt-infobox__header">
+                        <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title">{{r?.retirementType}}</span>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Emp Code</div>
+                        <div class="col-md-7">{{r?.empCode}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Level</div>
+                        <div class="col-md-7">{{r?.level}} </div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Designation</div>
+                        <div class="col-md-7">{{r?.designation}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Branch</div>
+                        <div class="col-md-7">{{r?.branch}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Letter Number</div>
+                        <div class="col-md-7">{{r?.letterNumber}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Letter Date</div>
+                        <div class="col-md-7">{{r?.letterDate}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Letter Date Nepali</div>
+                        <div class="col-md-7">{{r?.letterDateNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Retirement Date </div>
+                        <div class="col-md-7">{{r?.retirementDate}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Retirement Date Nepali</div>
+                        <div class="col-md-7">{{r?.retirementDateNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Retirement Type</div>
+                        <div class="col-md-7">{{r?.retirementType}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Pension Amount</div>
+                        <div class="col-md-7">{{r?.pensionAmount}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Pension Period</div>
+                        <div class="col-md-7">{{r?.pensionPeriod}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Gratuity Amount:-</div>
+                        <div class="col-md-7">{{r?.gratuityAmount}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Pension Period</div>
+                        <div class="col-md-7">{{r?.pensionPeriod}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Age On Retirement</div>
+                        <div class="col-md-7">{{r?.ageOnRetirement}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Service Period</div>
+                        <div class="col-md-7">{{r?.servicePeriod}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Description</div>
+                        <div class="col-md-7">{{r?.description}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col" style="min-height: 40px;">
+                            <div style="display: flex; justify-content: center">
+                                <button (click)="onAction(r.id)" type="button" class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="flaticon-edit mr-1"></i></button>
+                                <button (click)="onDelete(r.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1" matTooltip="Delete" matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">License</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc"> License Management</span>
+            <!-- <button  type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button> -->
+            <button *ngIf="hasFilter || query?.filters.length >0 || query?.sort?.orderDirection"
+                [@fadeIn]="query?.filters.length" (click)="resetFilters()" type="button"
+                class="btn btn-label-danger btn-bold btn-icon-h">
+                Clear Filters
+            </button>
+
+            <button (click)="requestLicense()" class="btn btn-primary">Request License</button>
+        </div>
+        <div class="dropdown dropdown-inline">
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet position-relative mb-0 px-2 pt-2">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!(isLoadingResults || dataSource.data?.length > 0 ) else table"
+        class="alert alert-secondary record-not-found" area="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information record-not-found-text"></i> No record found</h4>
+        </div>
+    </div>
+    <ng-template #table>
+        <div class="table-container table-height" [perfectScrollbar]="{wheelPropagation: false}">
+            <mat-table [trackBy]="trackById" [@collectionInOut]="dataSource.data?.length" matSort
+                [dataSource]="dataSource" class="table-borderless" multiTemplateDataRows>
+                <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width justify-content-center">
+                        <mat-checkbox [disabled]="dataSource.data?.length <=0" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="cell-max-width justify-content-center">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="moduleName" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'moduleName')"
+                            [headerLabel]="'Module Name'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.moduleName}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'email')" [headerLabel]="'Email'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="licenseType" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'licenseType')"
+                            [headerLabel]="'License Type'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.licenseType}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="createdOn" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'createdOn')"
+                            [headerLabel]="'Created On'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.createdOn}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'status')" [headerLabel]="'Status'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.status}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row [id]="'row'+row.id" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </ng-template>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <mat-paginator [disabled]="!(isLoadingResults || dataSource.data?.length >0 )" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

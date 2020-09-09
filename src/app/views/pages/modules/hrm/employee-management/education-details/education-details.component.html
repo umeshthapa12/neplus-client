@@ -1,0 +1,195 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Employees education details</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+
+            <button *ngIf="selection.selected.length > 1" (click)="deleteSelected()" type="button"
+                class="btn btn-label-primary btn-bold btn-icon-h">
+                Delete selected
+            </button>
+
+            <button *ngIf="hasFilter || query?.filters.length >0 || query?.sort?.orderDirection"
+                [@fadeIn]="query?.filters.length" type="button" class="btn btn-label-danger btn-bold btn-icon-h">
+                Clear Filters
+            </button>
+        </div>
+        <div class="dropdown dropdown-inline">
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet position-relative mb-0 px-2 pt-2">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!(isLoadingResults || dataSource.data?.length > 0 ) else table"
+        class="alert alert-secondary record-not-found" area="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information record-not-found-text"></i> No record found</h4>
+        </div>
+    </div>
+    <ng-template #table>
+        <div class="table-container table-height" [perfectScrollbar]="{wheelPropagation: false}">
+            <mat-table [trackBy]="trackById" [@collectionInOut]="dataSource.data?.length" matSort
+                [dataSource]="dataSource" class="table-borderless" multiTemplateDataRows>
+
+                <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width justify-content-center">
+                        <mat-checkbox [disabled]="dataSource.data?.length <=0" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="cell-max-width justify-content-center">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-55 justify-content-center"> S.N
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-55 justify-content-center">
+                        {{el.sn}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="empCode">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'empCode')"
+                            [headerLabel]="'Employee Code'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.empCode}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="degreeName">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'degreeName')"
+                            [headerLabel]="'Degree Name'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.degreeName}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="institution">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'institution')"
+                            [headerLabel]="'Institution'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.institution}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="country">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'country')" [headerLabel]="'Country'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.country}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="startYear">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'startYear')"
+                            [headerLabel]="'Start Year'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.startYear}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="passedYear">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'passedYear')"
+                            [headerLabel]="'Passed Year'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.passedYear}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="majorSubject">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'majorSubject')"
+                            [headerLabel]="'Major Subject'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.majorSubject}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="duration">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'duration')"
+                            [headerLabel]="'Course duration'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.duration}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="university">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'university')"
+                            [headerLabel]="'University'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.university}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="grade">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'grade')" [headerLabel]="'Grade'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.grade}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status" cell-max-width-55>
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'status')" [headerLabel]="'Status'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.status}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-55">
+                        Actions
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-55 justify-content-center">
+                        <button [matMenuTriggerFor]="menu" type="button"
+                            class="btn btn-label-info btn-sm btn-icon btn-circle">
+                            <i class="flaticon-more"></i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button (click)="onAction(el.id)" class="dropdown-item" type="button">
+                                <i class="flaticon-edit kt-font-info  mr-1"></i> Edit
+                            </button>
+                            <button (click)="onDelete(el.id)" class="dropdown-item" type="button">
+                                <i class="flaticon-delete kt-font-danger  mr-1"></i> Delete
+                            </button>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                    <mat-cell *matCellDef="let el" [attr.colspan]="displayedColumns.length">
+
+                        <!-- <expanded-content *ngIf="el === expandedElement"></expanded-content> -->
+
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row  [id]="'row'+row.id"
+                *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </ng-template>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <mat-paginator [disabled]="!(isLoadingResults || dataSource.data?.length >0 )" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

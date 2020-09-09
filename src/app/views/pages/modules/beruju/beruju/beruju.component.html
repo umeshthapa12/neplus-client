@@ -1,0 +1,164 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">बेरुजु</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">बेरुजु तालिका</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                नयाँ थफ्नुहोस्
+            </button>
+            <button *ngIf="hasFilter || query?.filters.length >0 || query?.sort?.orderDirection"
+                [@fadeIn]="query?.filters.length" (click)="resetFilters()" type="button"
+                class="btn btn-label-danger btn-bold btn-icon-h">
+                Clear Filters
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="kt-portlet position-relative mb-0 px-2 pt-2">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!(isLoadingResults || dataSource.data?.length > 0 ) else table"
+        class="alert alert-secondary record-not-found" role="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information record-not-found-text"></i> No record found</h4>
+        </div>
+    </div>
+    <ng-template #table>
+        <div class="table-container table-height" [perfectScrollbar]="{wheelPropagation: false}">
+            <mat-table [trackBy]="trackById" [@collectionInOut]="dataSource.data?.length" matSort
+                [dataSource]="dataSource" class="table-borderless" multiTemplateDataRows>
+
+                <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width justify-content-center">
+                        <mat-checkbox [disabled]="dataSource.data?.length <=0" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="cell-max-width justify-content-center">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-55 justify-content-center"> क्र.सं
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-55 justify-content-center">
+                        {{el.sn}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef>
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'name')"
+                            [headerLabel]="'कार्यालयको नाम'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el"> {{el.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="uncleanMoney">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-180">
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'uncleanMoney')"
+                            [headerLabel]="'अशुली'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-180"> {{el.uncleanMoney}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="regular">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-180">
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'regular')" [headerLabel]="'नियमित'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-180"> {{el.regular}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="tax">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-180">
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'tax')"
+                            [headerLabel]="'करअसुली र मू.अ.कर समायोजन'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-180"> {{el.tax}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="mobilization">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-180">
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'mobilization')"
+                            [headerLabel]="'मोबिलाईजेसन पेस्की'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-180"> {{el.mobilization}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="privilegeMoney">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-180">
+                        <header-dropdown-filter (filterSubmitted)="filter($event, 'privilegeMoney')"
+                            [headerLabel]="'धरौटी'">
+                        </header-dropdown-filter>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-180"> {{el.privilegeMoney}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef class="cell-max-width-55">
+                        Actions
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let el" class="cell-max-width-55 justify-content-center">
+                        <button [matMenuTriggerFor]="menu" type="button"
+                            class="btn btn-label-info btn-sm btn-icon btn-circle">
+                            <i class="flaticon-more"></i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button (click)="onAction(el.id,el.guid)" class="dropdown-item" type="button">
+                                <i class="flaticon-edit kt-font-info  mr-1"></i> Edit
+                            </button>
+                            <button (click)="onDelete(el.id)" class="dropdown-item" type="button">
+                                <i class="flaticon-delete kt-font-danger  mr-1"></i> Delete
+                            </button>
+                        </mat-menu>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="expandedDetail">
+                    <mat-cell *matCellDef="let el" [attr.colspan]="displayedColumns.length">
+                        <expanded-lazy-beruju *ngIf="el === expandedElement"></expanded-lazy-beruju>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row [ngClass]="{'selected': row.id === selectedId}" [id]="'row'+row.id"
+                    *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row class="expanded-detail" [@fadeInOutStagger]="row === expandedElement ? 1 : 0"
+                    [ngStyle]="rowHeight(row)" *matRowDef="let row; columns: ['expandedDetail'];"></mat-row>
+            </mat-table>
+        </div>
+    </ng-template>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <mat-paginator [disabled]="!(isLoadingResults || dataSource.data?.length >0 )" [pageSize]="50"
+                [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

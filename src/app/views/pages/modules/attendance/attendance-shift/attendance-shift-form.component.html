@@ -1,0 +1,158 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="attendanceShiftForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id > 0 ? ' Change Attendance Shift Form' :'Add Attendance Shift' }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" matDialogContent>
+        <div class="row" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Code</mat-label>
+                    <input matInput formControlName="code" placeholder="Code" readonly>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}
+                    </mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Name">
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Begin Time</mat-label>
+                    <input matInput placeholder="Begin Time" formControlName="beginTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> End Time</mat-label>
+                    <input matInput placeholder="End Time" formControlName="endTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Break 1 Begin Time </mat-label>
+                    <input matInput placeholder="Break 1 Begin Time" formControlName="break1BeginTime">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Break 1 End Time </mat-label>
+                    <input matInput placeholder="Break 1 End Time" formControlName="break1EndTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Break 2 Begin Time </mat-label>
+                    <input matInput placeholder="Break 2 Begin Time" formControlName="break2BeginTime">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Break 2 End Time </mat-label>
+                    <input matInput placeholder=" Break 2 End Time" formControlName="break2EndTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Break 1 Duration</mat-label>
+                    <input matInput placeholder="Break 1 Duration" formControlName="break1Duration">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Break 2 Duration </mat-label>
+                    <input matInput placeholder="Break 2 Duration" formControlName="break2Duration">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Shift Duration </mat-label>
+                    <input matInput placeholder="Shift Duration" formControlName="shiftDuration">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4  mt-2">
+                <mat-slide-toggle color="primary" formControlName="isNight"> Is Night</mat-slide-toggle>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Punch Begin Duration </mat-label>
+                    <input matInput placeholder="Punch Begin Duration" formControlName="punchBeginDuration">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Punch End Duration </mat-label>
+                    <input matInput placeholder="Punch End Duration" formControlName="punchEndDuration">
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Shift Out Start Time </mat-label>
+                    <input matInput placeholder="Shift Out Start Time" formControlName="shiftOutStartTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Shift Out End Time </mat-label>
+                    <input matInput placeholder="Shift Out End Time" formControlName="shiftOutEndTime">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Late Grace Time</mat-label>
+                    <input matInput placeholder="Late Grace Time" formControlName="lateGraceTime">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Early Grace Time</mat-label>
+                    <input matInput placeholder="Early Grace Time" formControlName="earlyGraceTime">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6  mt-2">
+                <mat-slide-toggle color="primary" formControlName="isCheckNextDayOut"> Is Check Next Day Out
+                </mat-slide-toggle>
+            </div>
+            <div class="col-md-6  mt-2">
+                <mat-slide-toggle color="primary" formControlName="isLead"> Is Lead</mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,54 @@
+// import login css
+@import "sass/pages/login/login-1";
+
+kt-auth, .kt-login {
+	height: 100%;
+
+	.mat-form-field {
+		width: 100%;
+	}
+
+	// add extra right padding when displaying spinner in button
+	.kt-spinner {
+		padding-right: 3rem !important;
+	}
+}
+
+.txt-logo{
+	font-size: 24px;
+    font-weight: 600;
+    font-family: arial;
+    color: #FFF;
+}
+
+.txt-logo span{
+	color: #5578eb;
+    text-shadow: 0 0 0 #5a78d8;
+}
+.health-box-circle{
+	border-radius: 100%;
+	background-color: #dadeff;
+	width: 99px;
+	height: 99px;
+	padding: 20px 10px 20px 27px;
+	text-shadow: 2px 1px 0 #c6ccff, 2px 2px 0 #c8cdfb, 2px 3px 0 #d9ddff, 2px 4px 0 #dadeff;
+	box-shadow: 0 0 2px 3px #5867dd;color: #5867dd;
+}
+.health-box-circle i{
+	font-size: 55px;
+}
+.box{
+	min-height: 99px;
+    background: rgba(93, 120, 255, 0.25) !important;
+    margin-left: 20px;
+}
+.box.arrow-left:after {
+	content: " ";
+    position: absolute;
+    left: -16px;
+    top: 36%;
+    border-top: 15px solid transparent;
+    border-right: 15px solid rgba(93, 120, 255, 0.25);
+    border-left: none;
+    border-bottom: 15px solid transparent
+  }

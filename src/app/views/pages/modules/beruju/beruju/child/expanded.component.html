@@ -1,0 +1,64 @@
+<div *ngIf="content" class="row mx-0 px-3">
+    <div class="kt-widget1 col-md-4 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">कार्यालयको नाम</h3>
+                <span class="kt-widget1__desc">{{content?.name}}</span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">अशुली</h3>
+                <span class="kt-widget1__desc">{{content?.cMoney}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">नियमित</h3>
+                <span class="kt-widget1__desc">{{content?.regular}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-widget1 col-md-4 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">करअसुली र मू.अ.कर समायोजन</h3>
+                <span class="kt-widget1__desc">{{content?.tax}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">मोबिलाईजेसन पेस्की</h3>
+                <span class="kt-widget1__desc">{{content?.mobilization}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">फछ्यौट रकम</h3>
+                <span class="kt-widget1__desc">{{content?.persuadeMoney}} </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-widget1 col-md-4 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">धरौटी</h3>
+                <span class="kt-widget1__desc">{{content?.rMoney}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">आर्थिक वर्ष</h3>
+                <span class="kt-widget1__desc">{{content?.fiscalYear}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">बेरुजु दफा</h3>
+                <span class="kt-widget1__desc">{{content?.section}} </span>
+            </div>
+        </div>
+    </div>
+</div>

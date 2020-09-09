@@ -1,0 +1,108 @@
+<div class="m-portlet shadow-none mt-0 pt-0">
+    <div class="m-portlet__body px-0 pt-0">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container kt-container--fluid">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">Employees Travel details</h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">List</span>
+                    <button (click)="onAction(null)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                        Add
+                    </button>
+                </div>
+                <div class="dropdown dropdown-inline">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <div class="row mb-5" *ngIf="isLoading && travelDetails.length <= 0">
+            <div class="col-md-6">
+                <m-grid-placeholder></m-grid-placeholder>
+            </div>
+            <div class="col-md-6">
+                <m-grid-placeholder></m-grid-placeholder>
+            </div>
+        </div>
+        <div [@fadeInOutStagger]="travelDetails?.length" class="row" *ngIf="!isLoading &&  travelDetails?.length > 0;">
+            <div class="col-md-4 mb-4" *ngFor="let t of travelDetails; trackBy:trackById">
+                <mat-card class="mat-elevation-z1 mat-elevation-z7-custom">
+                    <mat-card-content class="mb-0 card-content-text">
+                        <div class="kt-infobox__header">
+                            <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title">Transport</span>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Name</div>
+                            <div class="col-md-7">{{t?.name}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Travel Mode</div>
+                            <div class="col-md-7">{{t?.travelMode}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Place</div>
+                            <div class="col-md-7">{{t?.place}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Date From</div>
+                            <div class="col-md-7">{{t?.dateFrom}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Date To</div>
+                            <div class="col-md-7">{{t?.dateTo}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Status</div>
+                            <div class="col-md-7">{{t?.status}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Description</div>
+                            <div class="col-md-7">{{t?.description}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div class="row">
+                            <div class="col" style="min-height: 40px;">
+                                <div style="display: flex; justify-content: center">
+                                    <button (click)="onAction(t.id)" type="button"
+                                        class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit"
+                                        matTooltipPosition="above"> <i class="flaticon-edit mr-1"></i></button>
+                                    <button (click)="delete(t.id)" type="button"
+                                        class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Delete"
+                                        matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isLoading && travelDetails?.length <= 0">
+        <div class="text-center">
+            <i class="la la-globe fa-8x m--font-metal"></i>
+            <br>
+            There are no datas. <a href="javascript:;" (click)="onAction(0)" class="m-link m-link--warning">
+                Add now </a>
+        </div>
+    </div>
+</div>

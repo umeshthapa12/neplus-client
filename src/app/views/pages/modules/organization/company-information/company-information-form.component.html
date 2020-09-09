@@ -1,0 +1,155 @@
+<form class="kt-portlet m-0 p-0 shadow-none" [formGroup]="companyInformationForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{(data?.id >0 ? 'Change Company Information' :'Add Company Information') }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}" *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                            <span class="row" [@fadeIn]="errors?.length">
+                                <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                            </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button (click)="clearErrors()" type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" required min="10">
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Name Nepali</mat-label>
+                <input matInput placeholder="Name Nepali" formControlName="nameNepali">
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}
+            </mat-error> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Registration Number</mat-label>
+                <input matInput placeholder="Registration Number" formControlName="registrationNumber" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.registrationNumber">
+                    {{displayMessage?.registrationNumber}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Registration Date</mat-label>
+                <input (click)="d.open()" (focus)="d.open()" [matDatepicker]="d" matInput placeholder="" formControlName="registrationDate">
+                <mat-datepicker #d></mat-datepicker>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.registrationDate">
+                    {{displayMessage?.registrationDate}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Pan Number</mat-label>
+                <input matInput placeholder="Pan Number" formControlName="panNumber" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.panNumber">{{displayMessage?.panNumber}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address" formControlName="address" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.address">{{displayMessage?.address}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Mailing Address</mat-label>
+                <input matInput placeholder="Mailing Address" formControlName="mailingAddress" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.mailingAddress">
+                    {{displayMessage?.mailingAddress}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput placeholder="Phone" formControlName="phone" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.phone">{{displayMessage?.phone}}
+                </mat-error>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.pattern">{{displayMessage?.pattern}}
+                </mat-error>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.minLength">{{displayMessage.minLength}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="Mobile" formControlName="mobile" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.mobile">{{displayMessage?.mobile}}
+                </mat-error>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.pattern">{{displayMessage?.pattern}}
+                </mat-error>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.minLength">{{displayMessage?.minLength}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.email">{{displayMessage?.email}}
+                </mat-error>
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.email">{{displayMessage.email}}</mat-error> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Logo</mat-label>
+                <input matInput placeholder="Logo" formControlName="logo" required>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.logo">{{displayMessage?.logo}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+</form>

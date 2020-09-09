@@ -1,0 +1,137 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="assetsForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 pt-0">
+        <div class="kt-portlet__head-label">
+            <h1 class="kt-portlet__head-title">
+                Personal Assets Form
+            </h1>
+        </div>
+
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button (click)="cancel()" type="button" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i
+                        class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" matDialogContent>
+        <div class="col-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                    *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                            <span class="row" [@fadeIn]="errors?.length">
+                                <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                            </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" (click)="clearErrors()" class="close" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+
+            <div class="col-md-5">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Code</mat-label>
+                    <input matInput formControlName="empCode" placeholder="Enter Employee Code">
+                </mat-form-field>
+            </div>
+            <div class="col-md-7">
+                <mat-form-field appearance="outline">
+                    <mat-label>Asset Name</mat-label>
+                    <input matInput formControlName="assetName" placeholder="Enter Asset Name">
+                </mat-form-field>
+            </div>
+            <div class="col-md-5">
+                <mat-form-field appearance="outline">
+                    <mat-label>Owner Name</mat-label>
+                    <input matInput formControlName="ownerName" placeholder="Enter Owner Name">
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Quantity</mat-label>
+                    <input matInput formControlName="quantity" placeholder="Enter Quantity of Assets">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Cost Value</mat-label>
+                    <input matInput formControlName="costValue" placeholder="Enter Cost value of Assets">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Current Value</mat-label>
+                    <input matInput formControlName="currentValue" placeholder="Enter current value of Assets">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Source of Income</mat-label>
+                    <input matInput formControlName="sourceOfIncome" placeholder="Enter source of Income">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Fiscal Year</mat-label>
+                    <mat-select formControlName="fiscalYear">
+                        <mat-option *ngFor="let s of fiscalYear" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="fiscalYear.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Asset Date</mat-label>
+                    <input matInput (click)="date.open()" (focus)="date.open()" [matDatepicker]="date"
+                        formControlName="assetDate" placeholder="Select date">
+                    <mat-datepicker #date></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label> Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                        <mat-option *ngIf="status.length < 1">No content</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" placeholder="Enter Description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div matDialogActions>
+        <div class="mat-dialog-action">
+            <div>
+                <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1"
+                    matTooltip="Save Changes" matTooltipPosition="above">
+                    <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                    <ng-template #working>
+                        <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                    </ng-template>
+                </button>
+                <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                    matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+</form>

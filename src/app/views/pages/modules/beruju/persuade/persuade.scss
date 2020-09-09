@@ -1,0 +1,36 @@
+/* ----Persuade form component---- */
+.mat-dialog-content{
+    margin: 0px !important;
+    padding:0px;
+}
+
+.mat-dialog-header {
+    cursor: move;
+}
+
+.mat-dialog-action {
+    display: flex;
+     width:100%; 
+     justify-content: center;
+}
+
+/* ----Persuade component---- */
+
+mat-row.detail-row{
+    height: 0 !important;
+}
+
+.cell-max-width{
+    max-width: 45px;
+}
+
+.cell-max-width-55{
+    max-width: 55px;
+}
+
+.selected{
+    background: #eef0fc;
+}
+
+
+

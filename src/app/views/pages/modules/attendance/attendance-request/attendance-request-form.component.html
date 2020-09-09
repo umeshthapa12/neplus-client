@@ -1,0 +1,182 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="attendanceRequestForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id > 0 ? ' Change Attendance Request Form' :'Add Attendance Request' }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" matDialogContent>
+        <div class="row" class="row pb-2 mb-4 pt-2" style="background: #fafafa;">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Employee Code</mat-label>
+                    <input matInput formControlName="empCode" placeholder="Employee Code" readonly>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Attendance Date</mat-label>
+                    <input matInput placeholder="Attendance Date" (click)="adate.open()" (focus)="adate.open()" [matDatepicker]="adate" formControlName="attendanceDate">
+                    <mat-datepicker #adate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.logDate">{{displayMessage?.logDate}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label> Attendance Date Nepali</mat-label>
+                    <input matInput placeholder="Attendance Date Nepali" (click)="andate.open()" (focus)="andate.open()" [matDatepicker]="andate" formControlName="attendanceDateNepali">
+                    <mat-datepicker #andate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.logDate">{{displayMessage?.logDate}}</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Log Time</mat-label>
+                    <input matInput formControlName="logTime" placeholder="Log Time">
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.deviceLog">{{displayMessage?.deviceLog}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Attendance Code </mat-label>
+                    <mat-select formControlName="attendanceCode" placeholder="Attendance Code" required>
+                        <mat-option *ngFor="let a of attendancesCodes" [value]="a.value">{{a.value}}</mat-option>
+                        <mat-option *ngIf="attendancesCodes.length < 1">No content</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.attendanceCode">
+                        {{displayMessage?.attendanceCode}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Direction</mat-label>
+                    <input matInput placeholder="Direction" formControlName="direction">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Remarks</mat-label>
+                    <input matInput placeholder="Remarks" formControlName="remarks">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Approval Status</mat-label>
+                    <input matInput placeholder="Approval Status" formControlName="approvalStatus">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Entry Date</mat-label>
+                    <input matInput placeholder=" Entry Date" (click)="edate.open()" (focus)="edate.open()" [matDatepicker]="edate" formControlName="entryDate">
+                    <mat-datepicker #edate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Entry By </mat-label>
+                    <input matInput placeholder="Entry By" formControlName="entryBy">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Action By </mat-label>
+                    <input matInput placeholder="Action By" formControlName="actionBy">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Action Date</mat-label>
+                    <input matInput placeholder=" Action Date" (click)="acdate.open()" (focus)="acdate.open()" [matDatepicker]="acdate" formControlName="actionDate">
+                    <mat-datepicker #acdate></mat-datepicker>
+                    <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Local IP </mat-label>
+                    <input matInput placeholder=" Local IP" formControlName="localIp">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Public Ip </mat-label>
+                    <input matInput placeholder="Public IP" formControlName="publicIp">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Action Remarks </mat-label>
+                    <input matInput placeholder="Action Remarks" formControlName="actionRemarks">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Out Place </mat-label>
+                    <input matInput placeholder="Out Place" formControlName="outPlace">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label> Planned Return Time </mat-label>
+                    <input matInput placeholder="Planned Return Time" formControlName="plannedReturnTime">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Request Source </mat-label>
+                    <input matInput placeholder="Request Source" formControlName="requestSource">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Location </mat-label>
+                    <input matInput placeholder="Location" formControlName="location">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Map Location </mat-label>
+                    <input matInput placeholder="Map Location" formControlName="mapLocation">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Map Location Name</mat-label>
+                    <input matInput placeholder="Map Location Name" formControlName="mapLocationName">
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>IMEI Number</mat-label>
+                    <input matInput placeholder="IMEI Number" formControlName="imeiNumber">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

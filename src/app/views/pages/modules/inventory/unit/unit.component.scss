@@ -1,0 +1,46 @@
+ Unit Component .record-not-found {
+     height: calc(100vh - 325px);
+ }
+
+ .record-not-found-text {
+     font-size: 2.4rem;
+ }
+
+ .table-height {
+     height: calc(100vh - 295px);
+ }
+
+ mat-row.detail-row {
+     height: 0 !important;
+ }
+
+ .cell-max-width {
+     max-width: 45px;
+ }
+
+ .cell-max-width-100 {
+     max-width: 100px;
+ }
+
+ .cell-max-width-120 {
+     max-width: 140px;
+ }
+
+ .cell-max-width-55 {
+     max-width: 55px;
+ }
+
+ .selected {
+     background: #eef0fc;
+ }
+
+ .no-radius {
+     border-radius: 0 !important;
+ }
+ /* Unit  form component */
+
+ .mat-dialog-action {
+     display: flex;
+     width: 100%;
+     justify-content: center;
+ }

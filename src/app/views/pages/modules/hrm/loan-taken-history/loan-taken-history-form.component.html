@@ -1,0 +1,123 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="loanTakenHistoryForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{(data?.id > 0 ? ' Change Loan Taken History ' :'Add Loan Taken History') }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Employee Code</mat-label>
+                <input matInput formControlName="empCode" readonly>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Loan</mat-label>
+                <input matInput placeholder="Loan" formControlName="loan">
+                <!-- <mat-error class="kt-font-danger" *ngIf="displayMessage?.name">{{displayMessage?.name}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label> Taken Date </mat-label>
+                <input matInput formControlName="takenDate" (click)="ldate.open()" (focus)="ldate.open()" [matDatepicker]="ldate" placeholder=" Taken Date">
+                <mat-datepicker #ldate></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Taken Date Nepali</mat-label>
+                <input matInput formControlName="takenDateNepali" (click)="tndate.open()" (focus)="tndate.open()" [matDatepicker]="tndate" placeholder="Taken Date Nepali">
+                <mat-datepicker #tndate></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input matInput formControlName="dueDate" (click)="ddate.open()" (focus)="ddate.open()" [matDatepicker]="ddate" placeholder="Due Date">
+                <mat-datepicker #ddate></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date Nepali</mat-label>
+                <input matInput formControlName="dueDateNepali" (click)="dndate.open()" (focus)="dndate.open()" [matDatepicker]="dndate" placeholder="Due Date Nepali">
+                <mat-datepicker #dndate></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Loan Clear Status</mat-label>
+                <mat-select formControlName="loanClearStatus">
+                    <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                    <mat-option *ngIf="status.length < 1">No content</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Clear Date</mat-label>
+                <input matInput formControlName="clearDate" (click)="cdate.open()" (focus)="cdate.open()" [matDatepicker]="cdate" placeholder="Clear Date">
+                <mat-datepicker #cdate></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Clear Date Nepali</mat-label>
+                <input matInput formControlName="clearDateNepali" (click)="cndate.open()" (focus)="cndate.open()" [matDatepicker]="cndate" placeholder="Clear Date Nepali">
+                <mat-datepicker #cndate></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label> Loan Amount</mat-label>
+                <input matInput placeholder="Loan Amount" formControlName="loanAmount" pattern>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.loanAmount">{{displayMessage?.loanAmount}}</mat-error>
+
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let s of status" [value]="s.value">{{s.value}}</mat-option>
+                    <mat-option *ngIf="status.length < 1">No content</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field appearance="outline">
+                <mat-label> Description</mat-label>
+                <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

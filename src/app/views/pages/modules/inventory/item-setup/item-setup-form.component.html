@@ -1,0 +1,138 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="itemSetupForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 pt-0">
+        <div class="kt-portlet__head-label">
+            <h1 class="kt-portlet__head-title">
+                Item Setup
+            </h1>
+        </div>
+
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i
+                        class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                    *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                            <span class="row" [@fadeIn]="errors?.length">
+                                <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                            </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" class="close" (click)="clearErrors()" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Item Code</mat-label>
+                <input matInput placeholder="Enter item code" formControlName="itemCode">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Item Name</mat-label>
+                <input matInput placeholder="Enter item name" formControlName="itemName">
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.itemName">{{displayMessage?.itemName}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Group Name</mat-label>
+                <mat-select formControlName="groupName">
+                    <mat-option *ngFor="let i of groupNames" [value]="i.value">{{i.value}}</mat-option>
+                    <mat-option *ngIf="groupNames.length < 1">No content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.groupName">{{displayMessage?.groupName}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Unit Name</mat-label>
+                <mat-select formControlName="unitName">
+                    <mat-option *ngFor="let u of unitName" [value]="u.value">{{u.value}}</mat-option>
+                    <mat-option *ngIf="unitName.length < 1">No content</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Purchase Rate</mat-label>
+                <input matInput formControlName="purchaseRate" placeholder="Add purchase rate">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Minimum Stock Quantity</mat-label>
+                <input matInput formControlName="minStockQty" placeholder="Add minimum stock quantity">
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.minStockQty">{{displayMessage?.minStockQty}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput formControlName="remarks" placeholder="Remarks"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-12 mb-2">
+            <div class="dropzone dropzone-default dropzone-brand dz-clickable" (click)="fileInput.click()"
+                id="kt_dropzone_2" appDragDrop (onFileDropped)="uploadFile($event)">
+                <div class="dropzone-msg dz-message needsclick" *ngIf="files.length < 1">
+                    <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                    <span class="dropzone-msg-desc">Upload up to 10 files</span>
+                </div>
+                <div *ngFor="let file of files; let i= index"
+                    class="dz-preview dz-file-preview dz-processing dz-error dz-complete">
+                    <div class="dz-image"><img data-dz-thumbnail=""></div>
+                    <div class="dz-details">
+                        <div class="dz-size"><span data-dz-size=""><strong></strong></span></div>
+                        <div class="dz-filename"><span data-dz-name="">{{file}}</span></div>
+                    </div>
+                    <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div>
+                    <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""
+                        (click)="deleteAttachment(i)">Remove file</a>
+                </div>
+            </div>
+            <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)">
+        </div>
+    </div>
+
+    <div matDialogActions>
+        <div class="mat-dialog-action">
+            <div>
+                <button [disabled]="isWorking || itemSetupForm.invalid" type="submit"
+                    class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes"
+                    matTooltipPosition="above">
+                    <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                    <ng-template #working>
+                        <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                    </ng-template>
+                </button>
+                <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                    matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+</form>

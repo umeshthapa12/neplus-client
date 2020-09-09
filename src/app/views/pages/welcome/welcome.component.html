@@ -1,0 +1,108 @@
+<div class="row" style="margin-top: -54px; position: relative;">
+    <div class="col-xl-3 col-md-4" *ngFor="let m of moduleLists">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__head kt-portlet__head--noborder">
+                <div class="kt-portlet__head-label"></div>
+                <div class="kt-portlet__head-toolbar">
+                    <div
+                        ngbDropdown
+                        [placement]="'bottom-right'"
+                        class="dropdown dropdown-inline"
+                    >
+                        <button
+                            ngbDropdownToggle
+                            type="button"
+                            class="btn btn-clean btn-sm btn-icon btn-icon-md"
+                        >
+                            <i class="flaticon-more"></i>
+                        </button>
+                        <div ngbDropdownMenu class="dropdown-menu">
+                            <ul class="kt-nav pt-0 pb-0">
+                                <li class="kt-nav__item">
+                                    <a href="javascript:;" class="kt-nav__link">
+                                        <i
+                                            class="kt-nav__link-icon flaticon-download-1"
+                                        ></i>
+                                        <span class="kt-nav__link-text"
+                                            >Install</span
+                                        >
+                                    </a>
+                                </li>
+                                <li class="kt-nav__item">
+                                    <a
+                                        href="javascript:;"
+                                        class="kt-nav__link text-nowrap"
+                                    >
+                                        <i
+                                            class="kt-nav__link-icon flaticon-imac"
+                                        ></i>
+                                        <span class="kt-nav__link-text"
+                                            >Request a Demo</span
+                                        >
+                                    </a>
+                                </li>
+                                <li class="kt-nav__item">
+                                    <a href="javascript:;" class="kt-nav__link">
+                                        <i
+                                            class="kt-nav__link-icon flaticon2-settings"
+                                        ></i>
+                                        <span class="kt-nav__link-text"
+                                            >Settings</span
+                                        >
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <!--begin::Widget -->
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <div
+                                class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest"
+                            >
+                                <i [ngClass]="m.iconClass" class="fa-2x"></i>
+                            </div>
+                        </div>
+                        <div class="kt-widget__info">
+                            <a
+                                #link
+                                *ngIf="m.isExternalLink; else appLink"
+                                [href]="m.link"
+                                class="kt-widget__titel"
+                                target="_blank"
+                            >
+                                {{ m.name }}
+                            </a>
+                            <ng-template #appLink>
+                                <a
+                                    #link
+                                    [routerLink]="m.link"
+                                    class="kt-widget__titel"
+                                >
+                                    {{ m.name }}
+                                </a>
+                            </ng-template>
+                            <span class="kt-widget__desc">
+                                {{ m.subDesc }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__section">
+                            {{ m.description }}
+                        </div>
+                    </div>
+                    <!-- <div class="kt-widget__footer">
+                        <button type="button" class="btn btn-label-primary btn-sm btn-upper">view project</button>
+                    </div> -->
+                </div>
+
+                <!--end::Widget -->
+            </div>
+        </div>
+    </div>
+</div>

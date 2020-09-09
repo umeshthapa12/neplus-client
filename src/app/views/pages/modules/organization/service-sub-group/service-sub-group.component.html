@@ -1,0 +1,112 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Service Sub Group</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Service  Sub Group List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <!-- <div *ngIf="!(isLoadingResults || assets.length > 0 ) else table" class="alert alert-secondary record-not-found" area="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information record-not-found-text"></i> No record found</h4>
+        </div>
+    </div> -->
+    <!-- <ng-template #table> -->
+    <div class="table-container table-height" [perfectScrollbar]="{wheelPropagation: false}">
+        <div class="row mx-0">
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-3 " *ngFor="let s of services; trackBy:trackById">
+                <mat-card class="mat-elevation-z1 mat-elevation-z7-custom pt-4 pb-4 h-100">
+                    <mat-card-content>
+                        <div class="kt-portlet__head">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title" style="text-align: center;">
+                                    {{s.name}}
+                                </h3>
+                            </div>
+                            <mat-card-actions>
+
+                                <div class="col mat-card-action">
+                                    <div class="mat-card-action-button">
+                                        <button (click)="onAction(s.id)" matTooltip="Edit this" matTooltipPosition="left" type="button" class="btn btn-label-info btn-icon btn-circle mx-1">
+                                            <i class="flaticon-edit"></i>
+                                        </button>
+                                        <button matTooltip="Delete this" matTooltipPosition="right" (click)="onDelete(s.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1">
+                                            <i class="flaticon-delete"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </mat-card-actions>
+                        </div>
+                        <div class="kt-portlet__body">
+                            <div class="kt-widget4">
+                                <div class="kt-widget4__item">
+                                    <div class="kt-widget4__info kt-font-brand">
+                                        Name
+                                    </div>
+                                    <span class="kt-widget4__number">{{s.name}}</span>
+                                </div>
+                                <div class="kt-widget4__item">
+
+                                    <div class="kt-widget4__info kt-font-brand">
+                                        Name Nepali
+                                    </div>
+                                    <span class="kt-widget4__number ">{{s.nameNepali}}</span>
+                                </div>
+                                <div class="kt-widget4__item">
+
+                                    <div class="kt-widget4__info kt-font-brand">
+                                        Service Group
+                                    </div>
+                                    <span class="kt-widget4__number ">{{s.serviceGroup}}</span>
+                                </div>
+                                <div class="kt-widget4__item">
+
+                                    <div class="kt-widget4__info kt-font-brand">
+                                        Description
+                                    </div>
+                                    <span class="kt-widget4__number ">{{s.description}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <!-- </ng-template> -->
+    <!-- <div class="row">
+        <div class="col-md-6 col-12 offset-md-6">
+            <mat-paginator class="bg-transparent" [pageSizeOptions]="[5, 10, 20, 50]" [pageSize]="10" showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </div> -->
+</div>

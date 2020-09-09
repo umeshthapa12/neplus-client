@@ -1,0 +1,29 @@
+.mat-dialog-action {
+    display: flex; 
+    width:100%; 
+    justify-content: center;
+}
+
+.mat-dialog-content{
+    margin: 0px !important;
+    padding:0px;
+}
+
+// Fiscal year component
+
+.header-content {
+    width: 115px;
+}
+
+.table-height {
+    height: calc(100vh - 285px);
+}
+
+.mat-card-action {
+    min-height: 40px;
+}
+
+.mat-card-action-button {
+    display: flex; 
+    justify-content: center;
+}

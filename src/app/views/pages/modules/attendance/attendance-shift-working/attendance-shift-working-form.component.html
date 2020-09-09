@@ -1,0 +1,83 @@
+<form class="kt-portlet mb-0 p-0 shadow-none" [formGroup]="shiftWorkingForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0 top-margin">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id > 0 ? ' Change Attendance Shift Working ' :'Add Attendance Shift Working' }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button matTooltip="Close" type="button" (click)="cancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md">
+                    <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2 ">
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Code</mat-label>
+                <input matInput placeholder="Code" formControlName="code">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Shift Code</mat-label>
+                <mat-select formControlName="shiftCode" required>
+                    <mat-option *ngFor="let s of shiftCodes" [value]="s.value">{{s.value}}</mat-option>
+                    <mat-option *ngIf="shiftCodes.length < 1">No content</mat-option>
+                </mat-select>
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.shiftCode">{{displayMessage?.shiftCode}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Working Day</mat-label>
+                <input matInput placeholder="Working Day" formControlName="workingDay">
+                <mat-error class="kt-font-danger" *ngIf="displayMessage?.workingDay">{{displayMessage?.workingDay}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+                <mat-label>Working Day Name</mat-label>
+                <input matInput placeholder="Working Day Name" formControlName="workingDayName">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Working Time</mat-label>
+                <input matInput placeholder="Working Time" formControlName="workingTime">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Working Hour</mat-label>
+                <input matInput placeholder="Working Hour" formControlName="workingHour">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Minimum Working Hour </mat-label>
+                <input matInput placeholder="Minimum Working Hour" formControlName="minWorkingHour">
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="mat-dialog-action">
+        <div>
+            <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1" matTooltip="Save Changes" matTooltipPosition="above">
+                <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                <ng-template #working>
+                    <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                </ng-template>
+            </button>
+            <button (click)="cancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+        </div>
+    </div>
+
+</form>

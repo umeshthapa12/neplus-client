@@ -1,0 +1,192 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Mail Server</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">List of Mail Servers</span>
+            <button (click)="onAction(0,'')" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add New
+            </button>
+            <button *ngIf="hasFilter || query?.filters.length >0 || query?.sort?.orderDirection"
+                [@fadeIn]="query?.filters.length" (click)="resetFilters()" type="button"
+                class="btn btn-label-danger btn-bold btn-icon-h">
+                Clear Filters
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+                <button (click)="toggleAccordion()" matTooltip="Toggle Accordion" type="button"
+                    class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i style="transition: transform .3s" class="flaticon2-down"
+                        [ngStyle]="{'transform':expanded?'rotate(180deg)':'rotate(0deg)'}"></i>
+                </button>
+                <button matTooltip="Toggle filter (coming soon)" type="button"
+                    class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="la la-filter"></i>
+                </button>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet position-relative mb-0 px-2 pt-2">
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div style="height: calc(100vh - 325px)" *ngIf="!(isLoadingResults || data?.length >0 ) else table"
+        class="alert alert-secondary" role="alert">
+        <div class="alert-text text-center 	kt-label-font-color-1">
+            <h4><i class="flaticon-information" style="font-size: 2.4rem"></i> No record found</h4>
+        </div>
+    </div>
+    <ng-template #table>
+        <div matSort class="table-container" [perfectScrollbar]="{wheelPropagation: false}"
+            style="height: calc(100vh - 295px)">
+            <mat-accordion id="mail-serve-list" [multi]="true" cdkDropListGroup>
+                <div class="row mx-0" style="height: inherit;">
+                    <div class="col-md-4" *ngFor="let ms of data;trackBy:trackByIndexFn; let parentIndex=index;">
+                        <div [@animateCollection]="ms?.length" class="row" cdkDropList [cdkDropListData]="ms"
+                            (cdkDropListDropped)="drop($event)">
+                            <div cdkDragBoundary="#mail-serve-list" cdkDrag *ngFor="let m of ms; trackBy:trackByFn"
+                                class="col-md-12 mt-2 mb-2 list-items">
+                                <div class="list-drop-placeholder col-md-12 px-0" *cdkDragPlaceholder></div>
+                                <mat-expansion-panel (afterExpand)="panelSpaceFixer(body)">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <span style="cursor:auto" (click)="$event.stopPropagation()">
+                                                <span matTooltip="Drag me to move" cdkDragHandle
+                                                    class="mr-2 kt-font-info sort-handler">
+                                                    <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                                                        </path>
+                                                        <path d="M0 0h24v24H0z" fill="none"></path>
+                                                    </svg>
+                                                </span>
+                                                {{m?.title?.length > 30  ? (m?.title | slice:0:30) +'...' : m.title}}
+                                            </span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <ng-template #body matExpansionPanelContent>
+                                        <div class="kt-widget13">
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Title</span>
+                                                <span class="kt-widget13__text ">{{m.title}}</span>
+                                            </div>
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Host</span>
+                                                <span class="kt-widget13__text ">{{m.host}}</span>
+                                            </div>
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Port</span>
+                                                <span class="kt-widget13__text">{{m.port}}</span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="m.username">
+                                                <span class="kt-widget13__desc">Username</span>
+                                                <span class="kt-widget13__text">{{m.username}}</span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="m.password">
+                                                <span class="kt-widget13__desc">Password</span>
+                                                <span class="kt-widget13__text">
+                                                    <span class="kt-font-warning"
+                                                        *ngIf="tog.checked; else hidden">{{m.password}}</span>
+                                                    <ng-template #hidden>
+                                                        <span
+                                                            style="font-size: 17px;">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>
+                                                    </ng-template>
+                                                    <mat-slide-toggle class="float-right" #tog
+                                                        matTooltip="Show/Hide password"></mat-slide-toggle>
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Requires Authentication</span>
+                                                <span class="kt-widget13__text ">
+                                                    <span class="kt-badge kt-badge--secondary kt-badge--inline">
+                                                        {{m.requiresAuthentication ? 'Yes': 'No'}}</span>
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Use as Default</span>
+                                                <span class="kt-widget13__text ">
+                                                    <div #def title="Click to show status list and change as needed">
+                                                        <mat-select
+                                                            (selectionChange)="updateDefaults($event, m.id, parentIndex, def)"
+                                                            [value]="m.isDefault">
+                                                            <mat-select-trigger>
+                                                                <span class="status-wrap">
+                                                                    <span
+                                                                        [ngClass]="{'kt-badge--warning':!m.isDefault,'kt-badge--info':m.isDefault}"
+                                                                        class="kt-badge kt-badge--inline">
+                                                                        {{m.isDefault ? 'Yes': 'No'}}
+                                                                    </span>
+                                                                </span>
+                                                            </mat-select-trigger>
+                                                            <mat-option [value]="true"> Yes </mat-option>
+                                                            <mat-option [value]="false"> No </mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </span>
+                                            </div>
+
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">Status</span>
+                                                <span class="kt-widget13__text ">
+                                                    <div #status title="Click to show status list and change as needed">
+                                                        <status-updator
+                                                            (statusChanged)="updateStatus($event, m.id, parentIndex, status)"
+                                                            [currentStatus]="m.status"></status-updator>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <mat-divider class=" mt-1 mb-1"></mat-divider>
+                                            <div class="kt-widget13__item row">
+                                                <div class="col-12 px-0" style="color:#a7abc3">{{m?.description}}</div>
+                                            </div>
+                                            <div class="kt-widget13__item row">
+                                                <div class="col-12 px-0">
+                                                    <div style="display: flex; justify-content: center">
+                                                        <button (click)="onAction(m.id, m.userGuid)"
+                                                            matTooltip="Edit this" matTooltipPosition="left"
+                                                            type="button"
+                                                            class="btn btn-label-info btn-icon btn-circle mx-1">
+                                                            <i class="flaticon-edit"></i>
+                                                        </button>
+                                                        <button matTooltip="Delete this" matTooltipPosition="right"
+                                                            (click)="onDelete(m.id,m.userGuid)" type="button"
+                                                            class="btn btn-label-danger btn-icon btn-circle mx-1">
+                                                            <i class="flaticon-delete"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </mat-expansion-panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-accordion>
+        </div>
+    </ng-template>
+
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <mat-paginator [disabled]="!(isLoadingResults || data?.length >0 )" [pageSize]="50"
+                [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>

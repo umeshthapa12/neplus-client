@@ -1,0 +1,90 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Bank Account Details</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Bank Account Details List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade mt-5" *ngIf="isLoading">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && bankAccounts.length <= 0">
+        <div class="text-center">
+            No any information Found
+        </div>
+    </div>
+    <div [@fadeInOutStagger]="bankAccounts?.length" class="row" *ngIf="!isLoading &&  bankAccounts?.length > 0;">
+        <div class="col-md-4 mb-3 " *ngFor="let b of bankAccounts; trackBy:trackById">
+            <mat-card class="mat-elevation-z1 mat-elevation-z7-custom">
+                <mat-card-content class="mb-0 card-content-text">
+                    <div class="kt-infobox__header">
+                        <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title">{{b?.bankName}}</span>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Emp Code</div>
+                        <div class="col-md-7">{{b?.empCode}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Bank Name</div>
+                        <div class="col-md-7">{{b?.bankName}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Bank Branch Name </div>
+                        <div class="col-md-7">{{b?.bankBranchName}} </div>
+                    </div>
+
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Bank Account Number </div>
+                        <div class="col-md-7">{{b?.bankAccountNumber}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col" style="min-height: 40px;">
+                            <div style="display: flex; justify-content: center">
+                                <button (click)="onAction(b.id)" type="button" class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="flaticon-edit mr-1"></i></button>
+                                <button (click)="onDelete(b.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1" matTooltip="Delete" matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

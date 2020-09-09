@@ -1,0 +1,152 @@
+<form class="kt-portlet mb-0 shadow-none" [formGroup]="navForm" (ngSubmit)="saveChanges()" autocomplete="off">
+    <div matDialogTitle class="kt-portlet__head px-0">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{data?.id >0 ? 'Update a Navigation':'Add a new navigation'}}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-group">
+                <button type="button" (click)="onCancel()" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i
+                        class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12">
+            <div [@fadeIn]="responseMessage || errors?.length>0" id="res-messages">
+                <div class="alert mb-0" role="alert" [ngClass]="{'alert-danger':isError, 'alert-success':!isError}"
+                    *ngIf="responseMessage || errors?.length>0">
+                    <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                    <div class="alert-text">
+                        <span *ngIf="errors?.length > 0; else msgBlock">
+                            <span class="row" [@fadeIn]="errors?.length">
+                                <div class="col-12 mb-1 m--font-bolder"> {{ responseMessage}} </div>
+                                <div class="col-6" *ngFor="let e of  errors"> {{e.message}} </div>
+                            </span>
+                        </span>
+                        <ng-template #msgBlock> {{ responseMessage}} </ng-template>
+                    </div>
+                    <div class="alert-close">
+                        <button type="button" class="close" (click)="clearErrors()" aria-label="Close">
+                            <span aria-hidden="true"><i class="la la-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div matDialogContent>
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Route Type</mat-label>
+                    <mat-select disableRipple formControlName="type"
+                        [placeholder]="(routeType$ | async)?.length>0?'Select a Route type':'No Content'" required>
+                        <mat-option *ngFor="let c of routeType$ | async" [value]="c.key">{{c.value}}</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.type">
+                        {{displayMessage?.type}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Module</mat-label>
+                    <mat-select disableRipple formControlName="module"
+                        [placeholder]="(module$ | async)?.length>0?'Select a module name':'No Content'" required>
+                        <mat-option *ngFor="let c of module$ | async" [value]="c.key">{{c.value}}</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.module">
+                        {{displayMessage?.module}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Route Area</mat-label>
+                    <mat-select disableRipple formControlName="area"
+                        [placeholder]="(areaName$ | async)?.length>0?'Select an area name':'No Content'" required>
+                        <mat-option *ngFor="let c of areaName$ | async" [value]="c.key">{{c.value}}</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.area">
+                        {{displayMessage?.area}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row" [@fadeInOutStagger]="menuFor">
+            <div class="col-12 mb-2">
+                <mat-radio-group formControlName="menuFor" aria-label="nav for">
+                    <mat-radio-button value="parent">Root Menu / Parent</mat-radio-button>
+                    <mat-radio-button value="child">Sub Menu / Child</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-12 " *ngIf="menuFor !== 'parent'">
+                <mat-form-field appearance="outline" floatLabel="always">
+                    <mat-label>Parent for Child</mat-label>
+                    <mat-select disableRipple formControlName="parentId"
+                        [placeholder]="parentNavs?.length>0?'Select a Parent menu':'No Content'" required>
+                        <mat-option *ngFor="let c of parentNavs" [value]="c.key">{{c.value}}</mat-option>
+                    </mat-select>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.parentId">
+                        {{displayMessage?.parentId}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Link Text</mat-label>
+                    <input formControlName="text" matInput placeholder="Link / Display Text" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.text">{{displayMessage?.text}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nav Icon</mat-label>
+                    <input formControlName="icon" matInput placeholder="Font icon css class" matInput [matAutocomplete]="auto">
+                    <mat-autocomplete disableRipple  #auto="matAutocomplete">
+                        <mat-option  *ngFor="let f of filteredFontIcons | async" [value]="f">
+                            <i class="kt-font-info fa-2x mr-2 {{f}}" style="vertical-align: middle;"></i> {{f}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+            </div>
+        </div>
+        <div class="row mb-4" [@fadeInOutStagger]="hasPath.checked">
+            <div class="col-md-4" style="display: flex;align-items: center;justify-content: stretch;">
+                <mat-checkbox [checked]="data?.pathSegment" (change)="hasPathChange($event)" #hasPath>Has Path Segment?</mat-checkbox>
+            </div>
+            <div class="col-md-8" *ngIf="hasPath.checked">
+                <mat-form-field appearance="outline">
+                    <mat-label>Path Segment</mat-label>
+                    <input formControlName="pathSegment" matInput placeholder="Path segment" required>
+                    <mat-error class="kt-font-danger" *ngIf="displayMessage?.pathSegment">
+                        {{displayMessage?.pathSegment}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div matDialogActions>
+        <div style="display: flex; width:100%; justify-content: center">
+            <div>
+                <button [disabled]="isWorking" type="submit" class="btn btn-label-primary btn-icon btn-circle mx-1"
+                    matTooltip="Save Changes" matTooltipPosition="above">
+                    <i *ngIf="!isWorking; else working" class="la la-check"></i>
+                    <ng-template #working>
+                        <mat-spinner color="warn" strokeWidth="2" diameter="24"></mat-spinner>
+                    </ng-template>
+                </button>
+                <button (click)="onCancel()" type="button" class="btn btn-label-warning btn-icon btn-circle mx-1"
+                    matTooltip="Cancel" matTooltipPosition="above"> <i class="la la-close"></i></button>
+            </div>
+        </div>
+    </div>
+</form>

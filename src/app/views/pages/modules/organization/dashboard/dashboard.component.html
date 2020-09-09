@@ -1,0 +1,391 @@
+<div class="row" style="margin-top: -55px">
+
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'  ORGANIZATION DETAILS ::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div class="kt-widget25">
+                    <span class="kt-widget25__stats m-font-brand">237</span>
+                    <span class="kt-widget25__subtitle">Total Ogranization</span>
+                    <div class="kt-widget25__items">
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                63%
+                            </span>
+                            <div class="progress kt-progress--sm">
+                                <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                All Item Group
+                            </span>
+                        </div>
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                39%
+                            </span>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar kt-bg-success" role="progressbar" style="width: 39%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                All Items
+                            </span>
+                        </div>
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                54%
+                            </span>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar kt-bg-warning" role="progressbar" style="width: 54%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                Unconfirmed Items
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Sales Activity ::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div class="kt-widget25">
+                    <span class="kt-widget25__stats m-font-brand"> 237,650</span>
+                    <span class="kt-widget25__subtitle">To BE PACKED</span>
+                    <div class="kt-widget25__items">
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                63%
+                            </span>
+                            <div class="progress kt-progress--sm">
+                                <div class="progress-bar kt-bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                TO BE DELIVERED
+                            </span>
+                        </div>
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                39%
+                            </span>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar kt-bg-success" role="progressbar" style="width: 39%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                TO BE INVOICED
+                            </span>
+                        </div>
+                        <div class="kt-widget25__item">
+                            <span class="kt-widget25__number">
+                                54%
+                            </span>
+                            <div class="progress m-progress--sm">
+                                <div class="progress-bar kt-bg-warning" role="progressbar" style="width: 54%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <span class="kt-widget25__desc">
+                                TO BE SHIPPED
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <!--Stocke details table  -->
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Stock Details ::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div>
+                    <mat-table class="table-height" [dataSource]="stockDetailsSource" #stockDetailsSort="matSort" matSort>
+                        <!-- Serial number column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-55 "> S.N.
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-55 "> {{d.sn}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Store name column -->
+                        <ng-container matColumnDef="storeName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Store Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.storeName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Item name column -->
+                        <ng-container matColumnDef="itemName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Item Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.itemName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Minimum store column -->
+                        <ng-container matColumnDef="minStore">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Minimum Store </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.minStore}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Stock column -->
+                        <ng-container matColumnDef="stock">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-120" mat-sort-header> Stock
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-120"> {{d.stock}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Define table header -->
+                        <mat-header-row *matHeaderRowDef="stockDetailsColumn; sticky: true;"></mat-header-row>>
+                        <mat-row *matRowDef="let row; columns: stockDetailsColumn;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- Set material table paginator -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-paginator #stockDetailsPaginator [disabled]="!(isLoadingResults || stockDetailsSource.data?.length >0 )" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <!-- Item group table -->
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Item Group ::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div>
+                    <mat-table [dataSource]="itemGroupSource" multiTemplateDataRows #itemGroupSort="matSort" matSort>
+
+                        <!-- Id column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-55 "> S.N.
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-55 "> {{d.sn}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Name column -->
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.name}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Define table header -->
+                        <mat-header-row *matHeaderRowDef="itemGroupColumns; sticky: true;"></mat-header-row>>
+                        <mat-row *matRowDef="let row; columns: itemGroupColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- Set material table paginator -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-paginator #itemGroupPaginator [disabled]="!(isLoadingResults || itemGroupSource.data?.length >0 )" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <!-- Store details table -->
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Store Details ::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div>
+                    <mat-table [dataSource]="storeDetailsSource" multiTemplateDataRows #storeDetailsSort="matSort" matSort>
+
+                        <!-- Id column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-55 "> S.N.
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-55 "> {{d.sn}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Name column -->
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.name}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Define table header -->
+                        <mat-header-row *matHeaderRowDef="itemGroupColumns; sticky: true;"></mat-header-row>>
+                        <mat-row *matRowDef="let row; columns: itemGroupColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- Set material pagiantor -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-paginator #storeDetailsPaginator [disabled]="!(isLoadingResults || itemGroupSource.data?.length >0 )" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <!-- Purchase order table -->
+    <div class="col-md-6">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Purchase Order Details::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div>
+                    <mat-table [dataSource]="purchaseOrderSource" #purchaseOrderSort="matSort" multiTemplateDataRows matSort>
+
+                        <!-- Id column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-55 "> S.N.
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-55 "> {{d.sn}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Store name column -->
+                        <ng-container matColumnDef="storeName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Store Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.storeName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Supplier name column -->
+                        <ng-container matColumnDef="supplierName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.supplierName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Transaction date column -->
+                        <ng-container matColumnDef="transactionDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Date
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.transactionDate}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Order status column -->
+                        <ng-container matColumnDef="orderStatus">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Order Status
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.orderStatus}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Total amount column -->
+                        <ng-container matColumnDef="totalAmount">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Total Amount
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.totalAmount}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Define table header -->
+                        <mat-header-row *matHeaderRowDef="purchaseOrderColumns; sticky: true;"></mat-header-row>>
+                        <mat-row *matRowDef="let row; columns: purchaseOrderColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- Set material paginator -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-paginator #purchaseOrderPaginator [disabled]="!(isLoadingResults || purchaseOrderSource.data?.length >0 )" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+    <!-- Item request table -->
+    <div class="col-md-12">
+        <kt-portlet class=" kt-portlet--space kt-portlet--height-fluid">
+            <kt-portlet-header [title]="'Item Request Details::'"></kt-portlet-header>
+            <kt-portlet-body [class]="'kt-portlet__body--fit'">
+                <div>
+                    <mat-table [dataSource]="itemRequestSource" #itemRequestSort="matSort" multiTemplateDataRows matSort>
+
+                        <!-- Id column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef class="cell-max-width-55 "> S.N.
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d" class="cell-max-width-55 "> {{d.sn}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Requested date column -->
+                        <ng-container matColumnDef="requestedDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Item Request Date
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.requestedDate}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Requested by column -->
+                        <ng-container matColumnDef="requestedBy">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Requested By
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.requestedBy}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Requested to column -->
+                        <ng-container matColumnDef="requestedTo">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Requested To
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.requestedTo}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Total quantity column -->
+                        <ng-container matColumnDef="totalQty">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Total Quantity
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.totalQty}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Store name column -->
+                        <ng-container matColumnDef="storeName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Store Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.storeName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Store name to column -->
+                        <ng-container matColumnDef="storeNameTo">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Store Name To
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.storeNameTo}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Project name column -->
+                        <ng-container matColumnDef="projectName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Project Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let d"> {{d.projectName}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Define table header -->
+                        <mat-header-row *matHeaderRowDef="itemRequestColumns; sticky: true;"></mat-header-row>>
+                        <mat-row *matRowDef="let row; columns: itemRequestColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- Set material paginator -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-paginator #itemRequestPaginator [disabled]="!(isLoadingResults || itemGroupSource.data?.length >0 )" [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50, 100, 200, 400, 500]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </kt-portlet-body>
+        </kt-portlet>
+    </div>
+
+</div>

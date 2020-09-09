@@ -1,0 +1,74 @@
+<mat-progress-bar style="height: 2px;" *ngIf="isLoading" mode="indeterminate" color="warn"></mat-progress-bar>
+<div *ngIf="!isLoading && content?.username" class="row mx-0 px-3">
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Name</h3>
+                <span class="kt-widget1__desc">{{content?.fullName}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Date Of Birth</h3>
+                <span class="kt-widget1__desc">{{content?.dateOfBirth | date}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Gender</h3>
+                <span class="kt-widget1__desc">{{content?.gender}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Address</h3>
+                <span class="kt-widget1__desc">{{content?.address}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Email</h3>
+                <span class="kt-widget1__desc">{{content?.email}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info w-100">
+                <h3 class="kt-widget1__title">Contact Number(s)</h3>
+                <span class="kt-widget1__desc">
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let n of content?.phoneNumbers">
+                            {{n.phoneType}}
+                            <span class="kt-badge kt-badge--info kt-badge--dot"></span>
+                            {{n.number}}
+                        </div>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Role</h3>
+                <span class="kt-widget1__desc">{{content?.role}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Username</h3>
+                <span class="kt-widget1__desc">{{content?.username}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Password</h3>
+                <span class="kt-widget1__desc">{{content?.password}}</span>
+            </div>
+        </div>
+    </div>
+</div>

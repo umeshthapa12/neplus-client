@@ -1,0 +1,50 @@
+<div class="row" style="margin-top: -54px; position: relative;">
+    <div class="col-md-6 mx-auto">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Change admin password
+                    </h3>
+                </div>
+            </div>
+            <!--begin::Form-->
+            <form class="kt-form" [formGroup]="adminForm" (ngSubmit)="changePassword()">
+                <div class="kt-portlet__body">
+                    <mat-form-field [ngClass]="{'mb-3':displayMessage?.currentPassword}" appearance="outline" floatLabel="always">
+                        <mat-label>Enter your current password</mat-label>
+                        <input formControlName="currentPassword" matInput type="password" placeholder="current password"
+                            required>
+                        <mat-error class="kt-font-danger" *ngIf="displayMessage?.currentPassword">
+                            {{displayMessage?.currentPassword}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field [ngClass]="{'mb-3':displayMessage?.newPassword}" appearance="outline" floatLabel="always">
+                        <mat-label>New password</mat-label>
+                        <input formControlName="newPassword" matInput type="password" placeholder="new password"
+                            required>
+                        <mat-error class="kt-font-danger" *ngIf="displayMessage?.newPassword">
+                            {{displayMessage?.newPassword}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field [ngClass]="{'mb-3':displayMessage?.cNewPassword}" appearance="outline" floatLabel="always">
+                        <mat-label>Confirm new password</mat-label>
+                        <input compare="newPassword" formControlName="cNewPassword" matInput type="password"
+                            placeholder="confirm new password" required>
+                        <mat-error class="kt-font-danger" *ngIf="displayMessage?.cNewPassword">
+                            {{displayMessage?.cNewPassword}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <button
+                            [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--success': isWorking}"
+                            [disabled]="isWorking" type="submit" class="btn btn-primary">Change</button>
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<mat-select (selectionChange)="selectionChange($event)" [value]="currentStatus">
+    <mat-select-trigger>
+        <span class="status-wrap">
+            <span [ngClass]="contentStatus(currentStatus)" class="kt-badge kt-badge--inline kt-badge--wide">
+                {{ currentStatus }}
+            </span>
+            <!-- <span [@fadeInOutStagger]="isStatusChanged ? 1 : isStatusChanging ? 2 : 0">
+                <mat-spinner *ngIf="!isStatusChanged && isStatusChanging" [diameter]="20" [strokeWidth]="2"
+                    color="accent"></mat-spinner>
+                <i *ngIf="isStatusChanged && !isStatusChanging" class="la la-check kt-font-info"
+                    style="font-size: 18px;font-weight: 900;"></i>
+            </span> -->
+        </span>
+    </mat-select-trigger>
+    <mat-option *ngFor="let s of  status$ | async" [value]="s.key"> {{s.value}} </mat-option>
+</mat-select>

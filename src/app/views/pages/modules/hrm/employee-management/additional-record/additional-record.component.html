@@ -1,0 +1,172 @@
+<div class="m-portlet shadow-none mt-0 pt-0">
+    <div class="m-portlet__body px-0 pt-0">
+        <div class="kt-subheader kt-grid__item">
+            <div class="kt-container kt-container--fluid">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">Additional Record</h3>
+                    <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+                    <span class="kt-subheader__desc">List</span>
+                    <button (click)="onAction(null)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                        Add
+                    </button>
+                </div>
+                <div class="dropdown dropdown-inline">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <div class="row mb-5" *ngIf="isLoading && additionalRecords.length <= 0">
+            <div class="col-md-6">
+                <m-grid-placeholder></m-grid-placeholder>
+            </div>
+            <div class="col-md-6">
+                <m-grid-placeholder></m-grid-placeholder>
+            </div>
+        </div>
+        <div [@fadeInOutStagger]="additionalRecords?.length" class="row"
+            *ngIf="!isLoading &&  additionalRecords?.length > 0;">
+            <div class="col-md-6 mb-4" *ngFor="let t of additionalRecords; trackBy:trackById">
+                <mat-card class="mat-elevation-z1 mat-elevation-z7-custom" style="background-color: #fff;">
+                    <mat-card-content class="mb-0 card-content-text">
+                        <div class="kt-infobox__header">
+                            <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title">Additional
+                                Record</span>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Employee Code</div>
+                            <div class="col-md-3">{{t?.empCode}}</div>
+
+                            <div class="col-md-3 kt-font-info">Identity Issued Place</div>
+                            <div class="col-md-3">{{t?.identityIssuedPlace}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Employee file no</div>
+                            <div class="col-md-3">{{t?.empFileNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Driving License No</div>
+                            <div class="col-md-3">{{t?.drivingLicenseNo}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Employee pan no</div>
+                            <div class="col-md-3">{{t?.empPanNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Driving License Expiry Date</div>
+                            <div class="col-md-3">{{t?.drivingLicenseExpiryDate}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Emp PF no</div>
+                            <div class="col-md-3">{{t?.empPfNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Professional License No</div>
+                            <div class="col-md-3">{{t?.professionalLicenseNo}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">CIT no</div>
+                            <div class="col-md-3">{{t?.citNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Prof License Expire Date</div>
+                            <div class="col-md-3">{{t?.professionalLicenseExpireDate}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Insurance no</div>
+                            <div class="col-md-3">{{t?.insuranceNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Join Salary</div>
+                            <div class="col-md-3">{{t?.joinSalary}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Employee Personal code</div>
+                            <div class="col-md-3">{{t?.empPersonalCode}}</div>
+
+                            <div class="col-md-3 kt-font-info">Joining as</div>
+                            <div class="col-md-3">{{t?.joiningAs}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Other Ref. No</div>
+                            <div class="col-md-3">{{t?.otherRefNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Previous Experience Year</div>
+                            <div class="col-md-3">{{t?.previousExpYear}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Extension No</div>
+                            <div class="col-md-3">{{t?.extensionNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Special Talent</div>
+                            <div class="col-md-3">{{t?.specialTalent}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Identity No</div>
+                            <div class="col-md-3">{{t?.identityNo}}</div>
+
+                            <div class="col-md-3 kt-font-info">Hobbies</div>
+                            <div class="col-md-3">{{t?.hobbies}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-3 kt-font-info">Identity type</div>
+                            <div class="col-md-3">{{t?.identityType}}</div>
+
+                            <div class="col-md-3 kt-font-info">Other Interests</div>
+                            <div class="col-md-3">{{t?.otherInterest}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Job salary description</div>
+                            <div class="col-md-6">{{t?.joinSalaryDescription}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                        <div class="row">
+                            <div class="col-md-5 kt-font-info">Joining as description</div>
+                            <div class="col-md-6">{{t?.joiningAsDescription}}</div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div class="row">
+                            <div class="col" style="min-height: 40px;">
+                                <div style="display: flex; justify-content: center">
+                                    <button (click)="onAction(t.id)" type="button"
+                                        class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit"
+                                        matTooltipPosition="above"> <i class="flaticon-edit mr-1"></i></button>
+                                    <button (click)="delete(t.id)" type="button"
+                                        class="btn btn-label-warning btn-icon btn-circle mx-1" matTooltip="Delete"
+                                        matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isLoading && additionalRecords?.length <= 0">
+        <div class="text-center">
+            <i class="la la-globe fa-8x m--font-metal"></i>
+            <br>
+            There are no datas. <a href="javascript:;" (click)="onAction(0)" class="m-link m-link--warning">
+                Add now </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<mat-progress-bar style="height: 2px;" *ngIf="isLoading" mode="indeterminate" color="warn"></mat-progress-bar>
+<div *ngIf="!isLoading" class="row mx-0 px-3" style="background: #fafafa;">
+
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Title</h3>
+                <span class="kt-widget1__desc">{{content?.title}}</span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Nationality</h3>
+                <span class="kt-widget1__desc">{{content?.nationality}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Marital Status</h3>
+                <span class="kt-widget1__desc">{{content?.maritalStatus}}</span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Telephone Number</h3>
+                <span class="kt-widget1__desc">{{content?.telNo}}</span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Refrence Person</h3>
+                <span class="kt-widget1__desc">{{content?.refrencePerson}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Employee Code</h3>
+                <span class="kt-widget1__desc">{{content?.empCode}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Email</h3>
+                <span class="kt-widget1__desc">{{content?.email}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Religion</h3>
+                <span class="kt-widget1__desc">{{content?.religion}} </span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Mobile Number</h3>
+                <span class="kt-widget1__desc">{{content?.mobileNumber}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Status</h3>
+                <span class="kt-widget1__desc">{{content?.status}} </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Name</h3>
+                <span class="kt-widget1__desc">{{content?.firstName}} {{content?.middleName}} {{content?.lastName}}
+                </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Alternative Email</h3>
+                <span class="kt-widget1__desc">{{content?.alternativeEmail}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Blood Group</h3>
+                <span class="kt-widget1__desc">{{content?.bloodGroup}}</span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Settlement Status</h3>
+                <span class="kt-widget1__desc">{{content?.settlementStatus}}</span>
+            </div>
+        </div>
+
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Settlement Remark</h3>
+                <span class="kt-widget1__desc">{{content?.remarks}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-widget1 col-md-3 px-0">
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Gender</h3>
+                <span class="kt-widget1__desc">{{content?.gender}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Date of Birth</h3>
+                <span class="kt-widget1__desc">{{content?.dateOfBirth}} </span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Employee Code</h3>
+                <span class="kt-widget1__desc">{{content?.employeeCode}}</span>
+            </div>
+        </div>
+        <div class="kt-widget1__item">
+            <div class="kt-widget1__info">
+                <h3 class="kt-widget1__title">Settlement Date</h3>
+                <span class="kt-widget1__desc">{{content?.settlementDate}}</span>
+            </div>
+        </div>
+    </div>
+</div>

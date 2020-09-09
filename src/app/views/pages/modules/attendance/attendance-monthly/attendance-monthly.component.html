@@ -1,0 +1,235 @@
+<div class="kt-subheader kt-grid__item">
+    <div class="kt-container kt-container--fluid">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Attendance Monthly</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <span class="kt-subheader__desc">Attendance Monthly List</span>
+            <button (click)="onAction(0)" type="button" class="btn btn-label-primary btn-bold btn-icon-h">
+                Add
+            </button>
+        </div>
+        <div class="kt-subheader__toolbar">
+            <div class="kt-subheader__wrapper">
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-file"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon-download-1"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-fax"></i>
+                </a>
+
+                <a href="javascript:;" class="btn kt-subheader__btn-primary btn-sm btn-icon btn-circle">
+                    <i class="flaticon2-settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-portlet bg-transparent position-relative mb-0 shadow-none">
+    <div class="loading-shade mt-5" *ngIf="isLoading">
+        <mat-spinner strokeWidth="3" diameter="60"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && attendanceMonthly?.length <= 0">
+        <div class="text-center">
+            No any information Found
+        </div>
+    </div>
+    <div [@fadeInOutStagger]="attendanceMonthly?.length" class="row" *ngIf="!isLoading &&  attendanceMonthly?.length > 0;">
+        <div class="col-md-4 sm-3 mb-3 " *ngFor="let a of attendanceMonthly; trackBy:trackById">
+            <mat-card class="mat-elevation-z1 mat-elevation-z7-custom">
+                <mat-card-content class="mb-0 card-content-text">
+                    <div class="kt-infobox__header">
+                        <span style="font-size: 20px; font-weight: 400;" class="kt-infobox__title">Attendance Monthly</span>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border mt-2 mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Employee Code</div>
+                        <div class="col-md-7">{{a?.empCode}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Attendance Sheet</div>
+                        <div class="col-md-7">{{a?.attendanceSheet}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed "></div>
+
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Fiscal Year </div>
+                        <div class="col-md-7">{{a?.fiscalYear}} </div>
+                    </div>
+
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Salary Month No </div>
+                        <div class="col-md-7">{{a?.salaryMonthNo}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Salary Year</div>
+                        <div class="col-md-7">{{a?.salaryYear}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Month Order</div>
+                        <div class="col-md-7">{{a?.monthOrder}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Total Days In Month</div>
+                        <div class="col-md-7">{{a?.totalDaysInMonth}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Total Working Days</div>
+                        <div class="col-md-7">{{a?.totalWorkingDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Days</div>
+                        <div class="col-md-7">{{a?.leaveDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Absent Days</div>
+                        <div class="col-md-7">{{a?.absentDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Total Holidays</div>
+                        <div class="col-md-7">{{a?.totalHolidays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Total Worked Days</div>
+                        <div class="col-md-7">{{a?.totalWorkedDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Total Salary Days</div>
+                        <div class="col-md-7">{{a?.totalSalaryDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Allowance Days</div>
+                        <div class="col-md-7">{{a?.allowanceDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave WOP Days</div>
+                        <div class="col-md-7">{{a?.leaveWOPDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Adj Days</div>
+                        <div class="col-md-7">{{a?.adjDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Date From</div>
+                        <div class="col-md-7">{{a?.dateFrom}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Date From Nepali</div>
+                        <div class="col-md-7">{{a?.dateFromNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Date To</div>
+                        <div class="col-md-7">{{a?.dateTo}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Date To Nepali</div>
+                        <div class="col-md-7">{{a?.dateToNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Different From Salary Period</div>
+                        <div class="col-md-7">{{a?.leaveDifferentFromSalaryPeriod}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Date From </div>
+                        <div class="col-md-7">{{a?.leaveDateFrom}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Date From Nepali </div>
+                        <div class="col-md-7">{{a?.leaveDateFromNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Date To </div>
+                        <div class="col-md-7">{{a?.leaveDateTo}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Date To Nepali </div>
+                        <div class="col-md-7">{{a?.leaveDateToNepali}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Over Time </div>
+                        <div class="col-md-7">{{a?.overTime}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Leave Details </div>
+                        <div class="col-md-7">{{a?.leaveDetails}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Field Work Days </div>
+                        <div class="col-md-7">{{a?.fieldWorkDays}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Off Day Present </div>
+                        <div class="col-md-7">{{a?.offDayPresent}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Attendance </div>
+                        <div class="col-md-7">{{a?.attendance}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Off Day OT </div>
+                        <div class="col-md-7">{{a?.offDayOT}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info"> Daily Hour </div>
+                        <div class="col-md-7">{{a?.dailyHour}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+                    <div class="row">
+                        <div class="col-md-5 kt-font-info">Monthly Attendance Master</div>
+                        <div class="col-md-7">{{a?.monthlyAttendanceMaster}}</div>
+                    </div>
+                    <div class="kt-separator kt-separator--space-sm kt-separator--border"></div>
+
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="row">
+                        <div class="col" style="min-height: 40px;">
+                            <div style="display: flex; justify-content: center">
+                                <button (click)="onAction(a.id)" type="button" class="btn btn-label-info btn-icon btn-circle mx-1" matTooltip="Edit" matTooltipPosition="above">
+                                    <i class="flaticon-edit mr-1"></i></button>
+                                <button (click)="onDelete(a.id)" type="button" class="btn btn-label-danger btn-icon btn-circle mx-1" matTooltip="Delete" matTooltipPosition="above"> <i class="flaticon-delete  mr-1"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
